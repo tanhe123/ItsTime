@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="memo_list"/>
+    <item type="id" name="date"/>
+    <item type="id" name="memo_content"/>
+    <item type="id" name="container"/>
+    <item type="id" name="action_add_memo"/>
+    <item type="id" name="et_memo"/>
+    <item type="id" name="rl_date"/>
+
+    <item type="id" name="actions">false</item>
+    <item type="id" name="cancel">false</item>
+    <item type="id" name="ok">false</item>
+    <item type="id" name="bottom">false</item>
+    <item type="id" name="btn_options">false</item>
+    <item type="id" name="options">false</item>
+    <item type="id" name="form">false</item>
+    <item type="id" name="day">false</item>
+    <item type="id" name="memo">false</item>
+    <item type="id" name="notification">false</item>
+    <item type="id" name="days">false</item>
+    <item type="id" name="skin">false</item>
+    <item type="id" name="item">false</item>
+    <item type="id" name="status">false</item>
+    <item type="id" name="appwidget_text">false</item>
+    <item type="id" name="progressContainer">false</item>
+    <item type="id" name="listContainer">false</item>
+    <item type="id" name="failContainer">false</item>
+    <item type="id" name="new_day">false</item>
+    <item type="id" name="notificationIcon">false</item>
+    <item type="id" name="edit">false</item>
+    <item type="id" name="delete">false</item>
+    <item type="id" name="lastPadding">false</item>
+    <item type="id" name="selector">false</item>
+    <item type="id" name="preview">false</item>
+    <item type="id" name="checked">false</item>
+    <item type="id" name="title">false</item>
+    <item type="id" name="message">false</item>
+    <item type="id" name="retry">false</item>
+    <item type="id" name="action_feedback">false</item>
+    <item type="id" name="action_submit">false</item>
+
+    <item type="id" name="action_delete">false</item>
+</resources>

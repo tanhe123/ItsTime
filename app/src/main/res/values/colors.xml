@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="title_gray">#FF8C8C8C</color>
+    <color name="layout_bg">#507799FF</color>
+
+    <color name="list_date_text_color">#FF3CD575</color>
+
+    <color name="red">#E51616</color>
+
+    <color name="skin1">#fff85a53</color>
+    <color name="skin2">#ff8e517b</color>
+    <color name="skin3">#ff37799f</color>
+    <color name="skin4">#ff55afba</color>
+    <color name="skin5">#ff68b989</color>
+    <color name="skin6">#ff646d7c</color>
+    <color name="skin9">#fffff100</color>
+    <color name="holo_green_light">#ff99cc00</color>
+</resources>
