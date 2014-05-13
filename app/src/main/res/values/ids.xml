@@ -7,6 +7,8 @@
     <item type="id" name="action_add_memo"/>
     <item type="id" name="et_memo"/>
     <item type="id" name="rl_date"/>
+    <item type="id" name="drawer_layout"/>
+    <item type="id" name="left_drawer"/>
 
     <item type="id" name="actions">false</item>
     <item type="id" name="cancel">false</item>
