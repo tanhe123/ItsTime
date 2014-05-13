@@ -3,15 +3,24 @@ package com.xiayule.itstime.ui;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
 
 import com.xiayule.itstime.R;
 import com.xiayule.itstime.fragment.BlankFragment;
 import com.xiayule.itstime.fragment.MemoListFragment;
 import com.xiayule.itstime.service.MemoService;
 
+
+/*
+TODO:
+1. 动态修改 actionbar， 如长按 list item， 然后可以删除，可以标记为已完成
+2. Navigation
+
+ */
 public class MainActivity extends BaseActivity
         implements MemoListFragment.OnFragmentInteractionListener{
 
@@ -34,9 +43,22 @@ public class MainActivity extends BaseActivity
                         .commit();
             }
 
+            actionBar.setDisplayHomeAsUpEnabled(false);
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         }
 
         setListener();
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        //TODO: 动态修改 actionbar
+        MenuInflater inflater = getMenuInflater();
+ //       menu.clear();;
+   //     inflater.inflate(R.menu.memu_add_memo, menu);
+
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     public int getMemoCount() {
@@ -57,6 +79,7 @@ public class MainActivity extends BaseActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
+        menu.clear();
         inflater.inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
