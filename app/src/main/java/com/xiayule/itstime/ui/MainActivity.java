@@ -80,7 +80,7 @@ public class MainActivity extends BaseActivity
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,
                 mDrawerLayout,
-                R.drawable.bell,
+                R.drawable.ic_drawer,
                 R.string.drawer_open,
                 R.string.drawer_close) {
             @Override
@@ -145,11 +145,10 @@ public class MainActivity extends BaseActivity
                 startActivity(intent);
                 break;
             default:
-                break;
+                return super.onOptionsItemSelected(item);
         }
 
         return true;
-   //     return super.onOptionsItemSelected(item);
     }
 
 
