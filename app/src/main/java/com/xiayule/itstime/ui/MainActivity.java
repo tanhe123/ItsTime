@@ -6,14 +6,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.xiayule.itstime.R;
 import com.xiayule.itstime.fragment.BlankFragment;
@@ -56,10 +55,12 @@ public class MainActivity extends BaseActivity
                         .commit();
             }
 
-            actionBar.setDisplayHomeAsUpEnabled(false);
+//            actionBar.setDisplayHomeAsUpEnabled(false);
+
 //            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         }
 
+//        actionBar.setDisplayShowHomeEnabled(false);
         setListener();
     }
 
@@ -86,7 +87,7 @@ public class MainActivity extends BaseActivity
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-
+                Toast.makeText(MainActivity.this,"open", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -175,3 +176,5 @@ public class MainActivity extends BaseActivity
         startActivity(intent);
     }
 }
+
+
