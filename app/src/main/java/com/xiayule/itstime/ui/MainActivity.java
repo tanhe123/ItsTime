@@ -24,10 +24,14 @@ import com.xiayule.itstime.service.MemoService;
 /*
 TODO:
 1. 动态修改 actionbar， 如长按 list item， 然后可以删除，可以标记为已完成
-2. listview
+2. 开机启动
+3. 待办提醒
+4. 邮件通知
+
 
 已解决:
 1. Navigation (actionbar 显示 indacator)
+2. listview
 
  */
 public class MainActivity extends BaseActivity
@@ -97,7 +101,7 @@ public class MainActivity extends BaseActivity
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                Toast.makeText(MainActivity.this,"open", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -142,8 +146,6 @@ public class MainActivity extends BaseActivity
         int count = service.getCount();
         return count;
     }
-
-
 
     @Override
     public void onFragmentInteraction(Uri uri) {
