@@ -30,6 +30,7 @@ import com.xiayule.itstime.fragment.BlankFragment;
 import com.xiayule.itstime.fragment.MemoListFragment;
 import com.xiayule.itstime.receiver.AlarmReceiver;
 import com.xiayule.itstime.service.MemoService;
+import com.xiayule.itstime.utils.AlarmTask;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -93,30 +94,12 @@ public class MainActivity extends BaseActivity
         }
         setListener();
 
+    //    newTaskTest();
+    }
 
-        Calendar c=Calendar.getInstance();
-/*
-        c.set(Calendar.YEAR,2014);
-        c.set(Calendar.MONTH,Calendar.MAY); //也可以填数字，0-11,一月为0
-        c.set(Calendar.DAY_OF_MONTH, 16);
-        c.set(Calendar.HOUR_OF_DAY, 16);
-        c.set(Calendar.MINUTE, 30);
-        c.set(Calendar.SECOND, 0);
-*/
-        Intent intent = new Intent(this,AlarmReceiver.class);
-        PendingIntent pi=PendingIntent.getBroadcast(this, 0, intent, 0);
-        //设置一个PendingIntent对象，发送广播
-        AlarmManager am=(AlarmManager)getSystemService(ALARM_SERVICE);
-        //获取AlarmManager对象
-
-        //TODO: 测试 5000
-        am.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis()+5000, pi);
-
-        //时间到时，执行PendingIntent，只执行一次
-        //AlarmManager.RTC_WAKEUP休眠时会运行，如果是AlarmManager.RTC,在休眠时不会运行
-        //am.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), 10000, pi);
-        //如果需要重复执行，使用上面一行的setRepeating方法，倒数第二参数为间隔时间,单位为毫秒
-
+    private void newTaskTest() {
+        Calendar c =  Calendar.getInstance();
+        AlarmTask.newTask(this, c.getTimeInMillis()+5000);
     }
 
     private void initComp() {
