@@ -61,7 +61,6 @@ public class MainActivity extends BaseActivity
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
 
-
     String[] mDrawerListTitles = new String[]{NEW_MEMO, SETTING_EMAIL};
 
     private static final String NEW_MEMO = "新建";
@@ -241,8 +240,6 @@ public class MainActivity extends BaseActivity
         super.onStart();
    //     MNotification.clearNotification();
     }
-
-
 }
 
 
