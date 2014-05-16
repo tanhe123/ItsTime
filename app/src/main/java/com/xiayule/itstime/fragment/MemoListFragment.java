@@ -48,7 +48,7 @@ public class MemoListFragment extends ListFragment {
 //    private String mParam1;
 //    private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private OnFragmentInjn  teractionListener mListener;
 
     /**
      * Use this factory method to create a new instance of
