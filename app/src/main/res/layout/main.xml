@@ -2,14 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="@dimen/padding_large"
     android:orientation="vertical">
 
-
-    <FrameLayout
+    <android.support.v4.widget.DrawerLayout
+        android:id="@id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@id/container"/>
+        android:layout_height="match_parent">
+
+        <!-- The main content view -->
+        <FrameLayout
+            android:id="@id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/padding_large" />
+
+
+        <!-- The navigation drawer -->
+        <ListView
+            android:id="@id/left_drawer"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:padding="@dimen/padding_small"
+            android:background="#FFF"
+            android:choiceMode="singleChoice"
+            android:drawSelectorOnTop="false"
+            android:cacheColorHint="#00000000"
+           />
+
+    </android.support.v4.widget.DrawerLayout>
+
 
 </LinearLayout>
 

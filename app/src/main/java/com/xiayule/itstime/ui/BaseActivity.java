@@ -22,6 +22,7 @@ public class BaseActivity extends ActionBarActivity {
         this.actionBar = getSupportActionBar();
 
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_head));
     }
 
