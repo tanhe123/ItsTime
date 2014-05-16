@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity
     }
 
     private void initDrawerLayout() {
-        String[] mPlanetTitles = new String[] {"新建", "同步"};
+        String[] mPlanetTitles = new String[] {"新建", "通知邮箱", "设置"};
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
                 R.layout.drawer_list_item,
                 R.id.item, mPlanetTitles));
@@ -117,8 +117,6 @@ public class MainActivity extends BaseActivity
         return count;
     }
 
-
-
     @Override
     public void onFragmentInteraction(Uri uri) {
 
@@ -145,11 +143,10 @@ public class MainActivity extends BaseActivity
                 startActivity(intent);
                 break;
             default:
-                break;
+                return super.onOptionsItemSelected(item);
         }
 
         return true;
-   //     return super.onOptionsItemSelected(item);
     }
 
 
@@ -164,8 +161,6 @@ public class MainActivity extends BaseActivity
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
-
-
 
     @Override
     public void onBackPressed() {
