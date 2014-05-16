@@ -29,8 +29,8 @@ public class MNotification {
                         .setContentTitle("Its time")
                         .setContentText(contentText)
                         .setTicker("有新的任务要去完成喽")
-                        .setAutoCancel(true);
-        
+                        //.setContentInfo("10") 2.x 好像不支持
+                        .setAutoCancel(false);
 
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(context, MainActivity.class);
@@ -52,7 +52,6 @@ public class MNotification {
 
    //     mBuilder.setNumber(++number);
 
-     //   Toast.makeText(this, number + "", Toast.LENGTH_SHORT).show();
         NotificationManager mNotificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -60,6 +59,8 @@ public class MNotification {
     }
 
     public static void clearNotification() {
+        if (mContext == null) return;
+
         // 启动后删除之前我们定义的通知
         NotificationManager notificationManager = (NotificationManager)
                 mContext.getSystemService(Context.NOTIFICATION_SERVICE);

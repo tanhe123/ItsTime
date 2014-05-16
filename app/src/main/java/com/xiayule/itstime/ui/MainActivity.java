@@ -1,5 +1,6 @@
 package com.xiayule.itstime.ui;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -13,6 +14,7 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,7 +28,11 @@ import com.xiayule.itstime.R;
 import com.xiayule.itstime.comp.MNotification;
 import com.xiayule.itstime.fragment.BlankFragment;
 import com.xiayule.itstime.fragment.MemoListFragment;
+import com.xiayule.itstime.receiver.AlarmReceiver;
 import com.xiayule.itstime.service.MemoService;
+
+import java.util.Calendar;
+import java.util.Date;
 
 
 /*
@@ -34,8 +40,10 @@ TODO:
 1. 动态修改 actionbar， 如长按 list item， 然后可以删除，可以标记为已完成
 3. 待办提醒
 4. 邮件通知
-*. Notification notification 显示 现在去做（稍后会继续提醒）， 已完成 两个选项， 如果第二次显示则显示 正在做和已完成
-5. 完成积分 排行
+
+5. Notification notification 显示 现在去做（稍后会继续提醒）， 已完成 两个选项， 如果第二次显示则显示 正在做和已完成
+* 如果有多条要合并，并显示条数（或者合并，单击 展开)
+6. 完成积分 排行
 
 已解决:
 1. Navigation (actionbar 显示 indacator)
@@ -45,6 +53,8 @@ TODO:
 
 public class MainActivity extends BaseActivity
         implements MemoListFragment.OnFragmentInteractionListener {
+
+    private static final String TAG = "MainActivity";
 
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
@@ -82,6 +92,31 @@ public class MainActivity extends BaseActivity
 //            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         }
         setListener();
+
+
+        Calendar c=Calendar.getInstance();
+/*
+        c.set(Calendar.YEAR,2014);
+        c.set(Calendar.MONTH,Calendar.MAY); //也可以填数字，0-11,一月为0
+        c.set(Calendar.DAY_OF_MONTH, 16);
+        c.set(Calendar.HOUR_OF_DAY, 16);
+        c.set(Calendar.MINUTE, 30);
+        c.set(Calendar.SECOND, 0);
+*/
+        Intent intent = new Intent(this,AlarmReceiver.class);
+        PendingIntent pi=PendingIntent.getBroadcast(this, 0, intent, 0);
+        //设置一个PendingIntent对象，发送广播
+        AlarmManager am=(AlarmManager)getSystemService(ALARM_SERVICE);
+        //获取AlarmManager对象
+
+        //TODO: 测试 5000
+        am.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis()+5000, pi);
+
+        //时间到时，执行PendingIntent，只执行一次
+        //AlarmManager.RTC_WAKEUP休眠时会运行，如果是AlarmManager.RTC,在休眠时不会运行
+        //am.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), 10000, pi);
+        //如果需要重复执行，使用上面一行的setRepeating方法，倒数第二参数为间隔时间,单位为毫秒
+
     }
 
     private void initComp() {
