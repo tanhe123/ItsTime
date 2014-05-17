@@ -44,11 +44,11 @@ TODO:
 1. 动态修改 actionbar， 如长按 list item， 然后可以删除，可以标记为已完成
 3. 待办提醒(用每个待办的数据库id作为 通知id，防止相同)
 4. 邮件通知
-
 5. Notification notification 显示 现在去做（稍后会继续提醒）， 已完成 两个选项， 如果第二次显示则显示 正在做和已完成
 * 如果有多条要合并，并显示条数（或者合并，单击 展开)
 6. 完成积分 排行
 7. 配置文件读取
+8. 要兼容弹出输入法的布局
 
 已解决:
 1. Navigation (actionbar 显示 indacator)
@@ -97,6 +97,9 @@ public class MainActivity extends BaseActivity
 //            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         }
         setListener();
+
+
+
        // newTaskTest();
     //    PendingAlarmManager.fresh(this);
     }

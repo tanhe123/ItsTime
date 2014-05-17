@@ -29,7 +29,8 @@ public class MNotification {
                         .setContentTitle("Its time")
                         .setContentText(contentText)
                         .setTicker("有新的任务要去完成喽")
-                        //.setContentInfo("10") 2.x 好像不支持
+                        .setContentInfo("10") //2.x 好像不支持
+                        .setNumber(12)
                         .setAutoCancel(false);
 
         // Creates an explicit intent for an Activity in your app
