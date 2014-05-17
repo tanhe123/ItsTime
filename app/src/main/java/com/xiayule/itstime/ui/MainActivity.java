@@ -38,13 +38,16 @@ import java.util.Date;
 
 /*
 TODO:
+* 数据库增加字段 finished
+
 1. 动态修改 actionbar， 如长按 list item， 然后可以删除，可以标记为已完成
-3. 待办提醒
+3. 待办提醒(用每个待办的数据库id作为 通知id，防止相同)
 4. 邮件通知
 
 5. Notification notification 显示 现在去做（稍后会继续提醒）， 已完成 两个选项， 如果第二次显示则显示 正在做和已完成
 * 如果有多条要合并，并显示条数（或者合并，单击 展开)
 6. 完成积分 排行
+
 
 已解决:
 1. Navigation (actionbar 显示 indacator)
@@ -92,13 +95,13 @@ public class MainActivity extends BaseActivity
 //            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         }
         setListener();
-
-    //    newTaskTest();
+        newTaskTest();
     }
 
     private void newTaskTest() {
         Calendar c =  Calendar.getInstance();
-        AlarmTask.newTask(this, c.getTimeInMillis()+5000);
+        AlarmTask.newTask(this, c.getTimeInMillis()+5000, 1);
+
     }
 
     private void initComp() {

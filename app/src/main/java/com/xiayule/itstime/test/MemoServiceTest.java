@@ -13,11 +13,15 @@ public class MemoServiceTest extends AndroidTestCase {
     private static final String TAG = "MemoServiceTest";
 
     public void testSave() throws Exception {
-
+        MemoService service = new MemoService(getContext());
+        Memo memo = new Memo("2014-01-02", "你好");
+        service.save(memo);
     }
 
     public void testDelete() throws Exception {
-
+        MemoService service = new MemoService(getContext());
+        Memo memo = new Memo(2, "2014-01-02", "你好吗", true);
+        service.delete(2);
     }
 
     public void testDeleteAll() {
@@ -26,7 +30,9 @@ public class MemoServiceTest extends AndroidTestCase {
     }
 
     public void testUpdate() throws Exception {
-
+        MemoService service = new MemoService(getContext());
+        Memo memo = new Memo(2, "2014-01-02", "你好吗", true);
+        service.update(memo);
     }
 
     public void testGetCount() {
