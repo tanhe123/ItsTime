@@ -160,8 +160,8 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/xiayule/itstime/ui/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2753623" vertical-offset="3426" max-vertical-offset="4400">
-              <caret line="214" column="32" selection-start-line="214" selection-start-column="32" selection-end-line="214" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.048309177" vertical-offset="3420" max-vertical-offset="4400">
+              <caret line="209" column="27" selection-start-line="209" selection-start-column="27" selection-end-line="215" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -2615,8 +2615,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/xiayule/itstime/ui/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2753623" vertical-offset="3426" max-vertical-offset="4400">
-          <caret line="214" column="32" selection-start-line="214" selection-start-column="32" selection-end-line="214" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.048309177" vertical-offset="3420" max-vertical-offset="4400">
+          <caret line="209" column="27" selection-start-line="209" selection-start-column="27" selection-end-line="215" selection-end-column="31" />
           <folding />
         </state>
       </provider>
