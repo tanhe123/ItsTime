@@ -18,11 +18,17 @@ public class PendingAlarmManager {
 
         Iterator<Memo> ita = memos.iterator();
 
+        // 删除所有已完成的
         while (ita.hasNext()) {
             Memo memo = ita.next();
-
+            if (memo.isFinished()) {
+                ita.remove();
+            }
         }
 
-        //List<Memo> validMemos =
+        // 设置待办提醒
+        for (Memo memo : memos) {
+            AlarmTask.newTask(context, memo.getDate(), memo.getId());
+        }
     }
 }

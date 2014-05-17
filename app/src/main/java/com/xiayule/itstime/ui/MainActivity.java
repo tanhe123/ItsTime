@@ -31,6 +31,7 @@ import com.xiayule.itstime.fragment.MemoListFragment;
 import com.xiayule.itstime.receiver.AlarmReceiver;
 import com.xiayule.itstime.service.MemoService;
 import com.xiayule.itstime.utils.AlarmTask;
+import com.xiayule.itstime.utils.PendingAlarmManager;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -38,7 +39,7 @@ import java.util.Date;
 
 /*
 TODO:
-* 数据库增加字段 finished
+* 每次启动应用 更新 待办提醒
 
 1. 动态修改 actionbar， 如长按 list item， 然后可以删除，可以标记为已完成
 3. 待办提醒(用每个待办的数据库id作为 通知id，防止相同)
@@ -47,12 +48,13 @@ TODO:
 5. Notification notification 显示 现在去做（稍后会继续提醒）， 已完成 两个选项， 如果第二次显示则显示 正在做和已完成
 * 如果有多条要合并，并显示条数（或者合并，单击 展开)
 6. 完成积分 排行
-
+7. 配置文件读取
 
 已解决:
 1. Navigation (actionbar 显示 indacator)
 2. listview
 3. 开机启动
+4. 数据库增加字段 finished
 */
 
 public class MainActivity extends BaseActivity
@@ -95,7 +97,8 @@ public class MainActivity extends BaseActivity
 //            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         }
         setListener();
-        newTaskTest();
+       // newTaskTest();
+    //    PendingAlarmManager.fresh(this);
     }
 
     private void newTaskTest() {

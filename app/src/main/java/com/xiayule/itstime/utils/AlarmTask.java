@@ -1,6 +1,7 @@
 package com.xiayule.itstime.utils;
 
 import android.app.AlarmManager;
+import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +10,11 @@ import android.widget.Toast;
 
 import com.xiayule.itstime.receiver.AlarmReceiver;
 
+import org.apache.http.impl.cookie.DateParseException;
+
+import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by tan on 14-5-16.
@@ -19,13 +24,16 @@ public class AlarmTask {
 
     public static void newTask(Context context, long millis, int alarmId) {
         Intent intent = new Intent(context,AlarmReceiver.class);
+
+        intent.putExtra("_id", alarmId);
+
         PendingIntent pi= PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         //设置一个PendingIntent对象，发送广播
         AlarmManager am=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         //获取AlarmManager对象
 
         Log.i(TAG, "收到 newTask");
-        Toast.makeText(context, "收到 newTask", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "有新的待办要处理哦", Toast.LENGTH_SHORT).show();
 
 
         // 指定事件启动
@@ -39,6 +47,21 @@ public class AlarmTask {
 
     public static void newTask(Context context, Calendar calendar, int alarmId) {
         newTask(context, calendar.getTimeInMillis(), alarmId);
+    }
+
+    public static void newTask(Context context, Date date, int alarmId) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        newTask(context, c, alarmId);
+    }
+
+    public static void newTask(Context context, String date, int alarmId) {
+        try {
+            Date d = Time.parseDate(date);
+            newTask(context, d, alarmId);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void newTask(Context context, int year, int month, int day, int hour, int minute, int second, int alarmId) {

@@ -7,6 +7,7 @@ import com.xiayule.itstime.domain.Memo;
 import com.xiayule.itstime.service.MemoService;
 
 
+import java.util.Iterator;
 import java.util.List;
 
 public class MemoServiceTest extends AndroidTestCase {
@@ -45,6 +46,22 @@ public class MemoServiceTest extends AndroidTestCase {
         MemoService service = new MemoService(getContext());
         List<Memo> memos = service.getScrollData();
         Log.i(TAG, memos.toString());
+    }
+
+    public void test() {
+        MemoService service = new MemoService(getContext());
+        List<Memo> memos = service.getScrollData();
+
+        Iterator<Memo> ita = memos.iterator();
+
+        Log.i(TAG, "开始");
+
+        while (ita.hasNext()) {
+            Memo memo = ita.next();
+            if (!memo.isFinished()) {
+                ita.remove();
+            }
+        }
     }
 
     public void testFind() throws Exception {

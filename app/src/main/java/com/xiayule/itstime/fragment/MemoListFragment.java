@@ -113,9 +113,6 @@ public class MemoListFragment extends ListFragment {
         adapter = new SimpleAdapter(getActivity(), datas, R.layout.memo_list_item,
                 new String[] {"date", "content"}, new int[] {R.id.date, R.id.memo_content});
         setListAdapter(adapter);
-
-        // 单击事件
-
     }
 
     @Override
@@ -135,12 +132,15 @@ public class MemoListFragment extends ListFragment {
         startActivity(intent);
     }
 
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
     }
+
+
 
     @Override
     public void onAttach(Activity activity) {
