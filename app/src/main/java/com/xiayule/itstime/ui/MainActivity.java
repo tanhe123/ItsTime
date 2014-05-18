@@ -39,6 +39,7 @@ import java.util.Date;
 
 /*
 TODO:
+* 左右移动 listview 出错 使用  listviewanimations
 * 每次启动应用 更新 待办提醒
 
 1. 动态修改 actionbar， 如长按 list item， 然后可以删除，可以标记为已完成
@@ -57,8 +58,7 @@ TODO:
 4. 数据库增加字段 finished
 */
 
-public class MainActivity extends BaseActivity
-        implements MemoListFragment.OnFragmentInteractionListener {
+public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
 
@@ -90,15 +90,13 @@ public class MainActivity extends BaseActivity
                         .commit();
             } else {
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, MemoListFragment.newInstance())
+                        .replace(R.id.container, new MemoListFragment())
                         .commit();
             }
 
-//            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+//          actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         }
         setListener();
-
-
 
        // newTaskTest();
     //    PendingAlarmManager.fresh(this);
@@ -168,7 +166,6 @@ public class MainActivity extends BaseActivity
         //       menu.clear();;
         //     inflater.inflate(R.menu.memu_add_memo, menu);
 
-
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -176,11 +173,6 @@ public class MainActivity extends BaseActivity
         MemoService service = new MemoService(this);
         int count = service.getCount();
         return count;
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 
     @Override

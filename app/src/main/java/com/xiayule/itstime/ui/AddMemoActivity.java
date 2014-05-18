@@ -90,7 +90,7 @@ public class AddMemoActivity extends BaseActivity {
     }
 
     public void initComp() {
-        txtDate = (TextView) findViewById(R.id.date);
+        txtDate = (TextView) findViewById(R.id.memo_date);
         editMemo = (EditText) findViewById(R.id.et_memo);
         rl_date = (RelativeLayout) findViewById(R.id.rl_date);
 
