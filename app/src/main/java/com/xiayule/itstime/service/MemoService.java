@@ -46,7 +46,7 @@ public class MemoService {
                 new Object[] {
                         memo.getContent(),
                         memo.getDate(),
-                        memo.isFinished()+"",
+                        memo.isFinished() ? "1" : "0",
                         memo.getId()});
 
         db.close();
@@ -102,6 +102,7 @@ public class MemoService {
 
         Cursor cursor = db.rawQuery("select * from memos", null);
         int count = cursor.getCount();
+        Log.d(TAG, "number of memo: " + count);
         db.close();
         return count;
     }

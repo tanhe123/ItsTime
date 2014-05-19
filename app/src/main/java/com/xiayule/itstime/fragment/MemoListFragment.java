@@ -19,6 +19,7 @@ import com.xiayule.itstime.service.MemoService;
 import com.xiayule.itstime.swipelistview.BaseSwipeListViewListener;
 import com.xiayule.itstime.swipelistview.SwipeListView;
 import com.xiayule.itstime.ui.AddMemoActivity;
+import com.xiayule.itstime.utils.MemoManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,8 +29,9 @@ public class MemoListFragment extends ListFragment {
     private static final String TAG = "MemoListFragment";
 
     private SwipeListView swipeListView;
-    private List<Memo> memos;
+    private List<Memo> memos = new ArrayList<Memo>();
 
+    private MemoAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,19 +45,13 @@ public class MemoListFragment extends ListFragment {
         return view;
     }
 
-    public List<Memo> getAllMemos() {
-        MemoService service = new MemoService(getActivity());
-        memos = service.getScrollData();
-        return memos;
-    }
-
     public void setListener() {
-        // 配置 listview
-        // 获取所有的备忘
-        memos = getAllMemos();
+        adapter = new MemoAdapter(getActivity(), memos);
 
-        MemoAdapter adapter = new MemoAdapter(getActivity(), memos);
-        setListAdapter(adapter);
+        //setListAdapter(adapter);
+        swipeListView.setAdapter(adapter);
+
+        refresh();
 
         swipeListView.setSwipeListViewListener(new BaseSwipeListViewListener() {
             @Override
@@ -74,6 +70,10 @@ public class MemoListFragment extends ListFragment {
                 startActivity(intent);
             }
         });
+    }
+
+    public void refresh() {
+        adapter.refresh();
     }
 
     @Override

@@ -14,12 +14,14 @@
         >
 
         <Button
+            android:id="@id/bt_finish"
             android:layout_width="0dp"
             android:layout_weight="1.0"
             android:layout_height="match_parent"
             android:text="标记完成"/>
 
         <Button
+            android:id="@id/bt_remove"
             android:layout_width="0dp"
             android:layout_weight="1.0"
             android:layout_height="match_parent"

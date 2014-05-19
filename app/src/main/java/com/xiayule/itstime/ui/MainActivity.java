@@ -39,7 +39,6 @@ import java.util.Date;
 
 /*
 TODO:
-* 左右移动 listview 出错 使用  listviewanimations
 * 每次启动应用 更新 待办提醒
 
 1. 动态修改 actionbar， 如长按 list item， 然后可以删除，可以标记为已完成
@@ -50,6 +49,7 @@ TODO:
 6. 完成积分 排行
 7. 配置文件读取
 8. 要兼容弹出输入法的布局
+9. 美化 listview
 
 已解决:
 1. Navigation (actionbar 显示 indacator)
@@ -98,7 +98,7 @@ public class MainActivity extends BaseActivity {
         }
         setListener();
 
-       // newTaskTest();
+        // newTaskTest();
     //    PendingAlarmManager.fresh(this);
     }
 
@@ -217,8 +217,6 @@ public class MainActivity extends BaseActivity {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
-
-
 
 
     @Override

@@ -12,6 +12,8 @@
     <item type="id" name="bt_undo"/>
     <item type="id" name="back"/>
     <item type="id" name="front"/>
+    <item type="id" name="bt_finish"/>
+    <item type="id" name="bt_remove"/>
 
     <item type="id" name="actions">false</item>
     <item type="id" name="cancel">false</item>
