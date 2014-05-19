@@ -1,8 +1,8 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xiayule.itstime.fragment.MemoListFragment">
+    >
 
     <ListView
         android:id="@android:id/list"
@@ -11,4 +11,26 @@
         android:drawSelectorOnTop="false"
         android:cacheColorHint="#00000000"
         />
-</FrameLayout>
+</FrameLayout>-->
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:swipe="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.xiayule.itstime.swipelistview.SwipeListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="#00000000"
+        android:listSelector="@drawable/list_item_selector"
+        swipe:swipeBackView="@id/back"
+        swipe:swipeCloseAllItemsWhenMoveList="true"
+        swipe:swipeDrawableChecked="@drawable/choice_selected"
+        swipe:swipeDrawableUnchecked="@drawable/choice_unselected"
+        swipe:swipeFrontView="@id/front"
+        swipe:swipeMode="both" />
+
+</LinearLayout>

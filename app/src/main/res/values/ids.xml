@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item type="id" name="memo_list"/>
-    <item type="id" name="date"/>
+    <item type="id" name="memo_date"/>
     <item type="id" name="memo_content"/>
     <item type="id" name="container"/>
     <item type="id" name="action_add_memo"/>
@@ -9,6 +9,11 @@
     <item type="id" name="rl_date"/>
     <item type="id" name="drawer_layout"/>
     <item type="id" name="left_drawer"/>
+    <item type="id" name="bt_undo"/>
+    <item type="id" name="back"/>
+    <item type="id" name="front"/>
+    <item type="id" name="bt_finish"/>
+    <item type="id" name="bt_remove"/>
 
     <item type="id" name="actions">false</item>
     <item type="id" name="cancel">false</item>

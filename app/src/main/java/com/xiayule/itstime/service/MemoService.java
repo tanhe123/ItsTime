@@ -1,5 +1,6 @@
 package com.xiayule.itstime.service;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,8 +24,11 @@ public class MemoService {
 
     public void save(Memo memo) {
         SQLiteDatabase db = memoDatabaseHelper.getWritableDatabase();
-        db.execSQL("insert into memos(content, date) values(?, ?)",
-                new Object[] {memo.getContent(), memo.getDate()});
+        db.execSQL("insert into memos(content, date, finished) values(?, ?, ?)",
+                new Object[] {memo.getContent(),
+                        memo.getDate(),
+                        memo.isFinished() ? 1 : 0});
+
         Log.i(TAG, memo.getContent() + " " + memo.getDate());
         db.close();
     }
@@ -38,8 +42,13 @@ public class MemoService {
 
     public void update(Memo memo) {
         SQLiteDatabase db = memoDatabaseHelper.getWritableDatabase();
-        db.execSQL("update memos set content=?, date=? where _id=?",
-                new Object[] {memo.getContent(), memo.getDate(), memo.getId()});
+        db.execSQL("update memos set content=?, date=?, finished=? where _id=?",
+                new Object[] {
+                        memo.getContent(),
+                        memo.getDate(),
+                        memo.isFinished() ? "1" : "0",
+                        memo.getId()});
+
         db.close();
     }
 
@@ -93,6 +102,7 @@ public class MemoService {
 
         Cursor cursor = db.rawQuery("select * from memos", null);
         int count = cursor.getCount();
+        Log.d(TAG, "number of memo: " + count);
         db.close();
         return count;
     }
@@ -101,7 +111,11 @@ public class MemoService {
         String content = cursor.getString(cursor.getColumnIndex("content"));
         int id = cursor.getInt(cursor.getColumnIndex("_id"));
         String date = cursor.getString(cursor.getColumnIndex("date"));
-        Memo memo = new Memo(id, date, content);
+        boolean isFinished = (cursor.getInt(cursor.getColumnIndex("finished")) == 1) ?
+                true : false;
+
+        Memo memo = new Memo(id, date, content, isFinished);
+
         return memo;
     }
 }

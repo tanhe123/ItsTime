@@ -1,26 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     >
 
-    <TextView
-        android:id="@id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/list_date_text_size"
-        android:textColor="@color/list_date_text_color"
-        android:paddingTop="10dp"
-        />
+    <LinearLayout
+        android:id="@id/back"
+        android:tag="back"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        >
 
+        <Button
+            android:id="@id/bt_finish"
+            android:layout_width="0dp"
+            android:layout_weight="1.0"
+            android:layout_height="match_parent"
+            android:text="标记完成"/>
 
-    <TextView
-        android:id="@id/memo_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/list_content_text_size"
-        android:paddingBottom="10dp"
-        />
+        <Button
+            android:id="@id/bt_remove"
+            android:layout_width="0dp"
+            android:layout_weight="1.0"
+            android:layout_height="match_parent"
+            android:text="删除"
+            />
+    </LinearLayout>
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@id/front"
+        android:tag="front"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:background="@drawable/list_item_selector"
+        android:padding="@dimen/padding_large"
+        >
+
+        <TextView
+            android:id="@id/memo_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/list_date_text_size"
+            android:textColor="@color/list_date_text_color"
+            android:layout_margin="10dp"
+            />
+
+        <TextView
+            android:id="@id/memo_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/list_content_text_size"
+            android:layout_margin="10dp"
+            />
+    </LinearLayout>
+</FrameLayout>

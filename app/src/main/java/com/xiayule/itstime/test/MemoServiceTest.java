@@ -7,17 +7,22 @@ import com.xiayule.itstime.domain.Memo;
 import com.xiayule.itstime.service.MemoService;
 
 
+import java.util.Iterator;
 import java.util.List;
 
 public class MemoServiceTest extends AndroidTestCase {
     private static final String TAG = "MemoServiceTest";
 
     public void testSave() throws Exception {
-
+        MemoService service = new MemoService(getContext());
+        Memo memo = new Memo("2014-01-02", "你好");
+        service.save(memo);
     }
 
     public void testDelete() throws Exception {
-
+        MemoService service = new MemoService(getContext());
+        Memo memo = new Memo(2, "2014-01-02", "你好吗", true);
+        service.delete(2);
     }
 
     public void testDeleteAll() {
@@ -26,7 +31,9 @@ public class MemoServiceTest extends AndroidTestCase {
     }
 
     public void testUpdate() throws Exception {
-
+        MemoService service = new MemoService(getContext());
+        Memo memo = new Memo(2, "2014-01-02", "你好吗", true);
+        service.update(memo);
     }
 
     public void testGetCount() {
@@ -39,6 +46,22 @@ public class MemoServiceTest extends AndroidTestCase {
         MemoService service = new MemoService(getContext());
         List<Memo> memos = service.getScrollData();
         Log.i(TAG, memos.toString());
+    }
+
+    public void test() {
+        MemoService service = new MemoService(getContext());
+        List<Memo> memos = service.getScrollData();
+
+        Iterator<Memo> ita = memos.iterator();
+
+        Log.i(TAG, "开始");
+
+        while (ita.hasNext()) {
+            Memo memo = ita.next();
+            if (!memo.isFinished()) {
+                ita.remove();
+            }
+        }
     }
 
     public void testFind() throws Exception {
