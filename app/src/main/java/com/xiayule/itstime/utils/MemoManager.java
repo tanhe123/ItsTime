@@ -17,32 +17,39 @@ public class MemoManager {
         return service.find(id);
     }
 
+    /**
+     * 获得所有的 memo, 顺序是先未完成，再完成
+     * @param context
+     * @return
+     */
     public static List<Memo> getAllMemos(Context context) {
         MemoService service = new MemoService(context);
-        List<Memo> memos = service.getScrollData();
-        return memos;
+        return service.getAllMemos();
     }
 
     public static List<Memo> getAllFinishedMemos(Context context) {
-        List<Memo> memos = getAllMemos(context);
+/*        List<Memo> memos = getAllMemos(context);
         Iterator<Memo> ita = memos.iterator();
         while (ita.hasNext()) {
             Memo memo = ita.next();
             if (!memo.isFinished()) ita.remove();
         }
 
-        return memos;
+        return memos;*/
+        MemoService service = new MemoService(context);
+        return service.getFinishedMemos();
     }
 
     public static List<Memo> getAllUnfinishedMemos(Context context) {
-        List<Memo> memos = getAllMemos(context);
+  /*      List<Memo> memos = getAllMemos(context);
         Iterator<Memo> ita = memos.iterator();
         while (ita.hasNext()) {
             Memo memo = ita.next();
             if (memo.isFinished()) ita.remove();
         }
-
-        return memos;
+*/
+        MemoService service = new MemoService(context);
+        return service.getUnfinishedMemos();
     }
 
     public static void deleteMemo(Context context, int id) {

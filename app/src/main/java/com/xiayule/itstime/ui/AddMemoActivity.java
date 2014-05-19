@@ -2,9 +2,12 @@ package com.xiayule.itstime.ui;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -74,7 +77,6 @@ public class AddMemoActivity extends BaseActivity {
                         new DatePickerDialog.OnDateSetListener(){
                             @Override
                             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-
                                 String date = year + "-" +
                                         (month < 10 ? "0"+month : month) + "-" +
                                         (dayOfMonth < 10 ? "0"+dayOfMonth : dayOfMonth);
@@ -119,6 +121,14 @@ public class AddMemoActivity extends BaseActivity {
             case R.id.action_add_memo:
                 String date = txtDate.getText().toString();
                 String content = editMemo.getText().toString();
+
+                if (content.isEmpty()) {
+                    //设置弹跳动画
+                    Animation shakeAnimation = AnimationUtils.loadAnimation(AddMemoActivity.this, R.anim.shake);
+                    editMemo.startAnimation(shakeAnimation);
+                    Log.d(TAG, "不能为空");
+                    return true;
+                }
 
                 MemoService service = new MemoService(this);
 

@@ -50,7 +50,6 @@ public class MemoAdapter extends BaseAdapter {
     @Override
     public Memo getItem(int i) {
         return data.get(i);
-
     }
 
     @Override
@@ -102,14 +101,13 @@ public class MemoAdapter extends BaseAdapter {
 
         //TODO: 不同的状态显示不同的效果
         // memo 完成 和 未完成 展示的效果不同
-        if (item.isFinished()) {
+        if (!item.isFinished()) {
             holder.bt_finish.setText(R.string.mark_finished);
             holder.ll_front.setBackgroundColor(view.getResources().getColor(R.color.memo_unfinished));
         } else {
             holder.bt_finish.setText(R.string.mark_unfinished);
             holder.ll_front.setBackgroundColor(view.getResources().getColor(R.color.memo_finished));
         }
-
 
         return view;
     }

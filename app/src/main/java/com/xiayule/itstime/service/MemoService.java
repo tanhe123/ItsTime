@@ -52,12 +52,31 @@ public class MemoService {
         db.close();
     }
 
-    public List<Memo> getScrollData() {
+
+    public List<Memo> getAllMemos() {
+        return getMemos("select * from memos as t order by(select _id from memos where date=t.date) desc, _id desc");
+    }
+
+    /**
+     *　获得所有未完成的 memo
+     * 按着时间递减排序，　如果时间相等，按 id(创建时间) 递减排序
+     * @return
+     */
+    public List<Memo> getFinishedMemos() {
+        return getMemos("select * from memos as t where finished=1 order by(select _id from memos where date=t.date) desc, _id desc");
+    }
+
+    public List<Memo> getUnfinishedMemos() {
+        return getMemos("select * from memos as t where finished=0 order by(select _id from memos where date=t.date) desc, _id desc");
+    }
+
+
+    private List<Memo> getMemos(String sql) {
         List<Memo> memos = new ArrayList<Memo>();
 
         SQLiteDatabase db = memoDatabaseHelper.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("select * from memos order by date desc", null);
+        Cursor cursor = db.rawQuery(sql, null);
 
         while (cursor.moveToNext()) {
             Memo memo = readOneFromCursor(cursor);

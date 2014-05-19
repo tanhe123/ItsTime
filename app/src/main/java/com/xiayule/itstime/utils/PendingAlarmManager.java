@@ -14,7 +14,7 @@ import java.util.List;
 public class PendingAlarmManager {
     public static void fresh(Context context) {
         MemoService service = new MemoService(context);
-        List<Memo> memos = service.getScrollData();
+        List<Memo> memos = service.getAllMemos();
 
         Iterator<Memo> ita = memos.iterator();
 
