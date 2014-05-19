@@ -1,20 +1,11 @@
 package com.xiayule.itstime.ui;
 
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,13 +19,11 @@ import com.xiayule.itstime.R;
 import com.xiayule.itstime.comp.MNotification;
 import com.xiayule.itstime.fragment.BlankFragment;
 import com.xiayule.itstime.fragment.MemoListFragment;
-import com.xiayule.itstime.receiver.AlarmReceiver;
 import com.xiayule.itstime.service.MemoService;
+import com.xiayule.itstime.service.PreferenceService;
 import com.xiayule.itstime.utils.AlarmTask;
-import com.xiayule.itstime.utils.PendingAlarmManager;
 
 import java.util.Calendar;
-import java.util.Date;
 
 
 /*
@@ -72,6 +61,12 @@ public class MainActivity extends BaseActivity {
     private static final String SYNC_MEMO = "同步";
     private static final String SETTING_EMAIL = "设置邮箱";
 
+    private static final int NAVIGATION_SHOW_ALL = 0;
+    private static final int NAVIGATION_SHOW_UNFINISHED = 1;
+    private static final int NAVIGATION_SHOW_FINISHED = 2;
+
+    private int idShowMethod;// 决定如何显示，全部，未完成，已完成
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,9 +75,18 @@ public class MainActivity extends BaseActivity {
         initComp();
         initDrawerLayout();
 
+        initActionNavigation();
+        setListener();
+
+        idShowMethod = PreferenceService.getShowMethod(this);
+
         if (savedInstanceState == null) {
 
             int count = getMemoCount();
+
+            actionBar.setSelectedNavigationItem(idShowMethod);
+            Bundle args = new Bundle();
+            args.putInt(MemoListFragment.PARAM_SHOW_METHOD, idShowMethod);
 
             if (count == 0) {
                 getSupportFragmentManager().beginTransaction()
@@ -93,13 +97,31 @@ public class MainActivity extends BaseActivity {
                         .replace(R.id.container, new MemoListFragment())
                         .commit();
             }
-
-//          actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         }
-        setListener();
 
         // newTaskTest();
     //    PendingAlarmManager.fresh(this);
+    }
+
+    private void initActionNavigation() {
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+
+        ArrayAdapter dropDownAdapter =
+                ArrayAdapter.createFromResource(this,
+                        R.array.navigation_mode_list_array,
+                        android.R.layout.simple_list_item_1);
+        actionBar.setListNavigationCallbacks(dropDownAdapter, new ActionBar.OnNavigationListener() {
+            @Override
+            public boolean onNavigationItemSelected(int position, long id) {
+                // TODO: 导航栏　可以选择默认显示全部0，未完成1，已完成2
+
+                // 用 position 来表示选择
+                PreferenceService.saveShowMethod(MainActivity.this, position);
+
+                Toast.makeText(MainActivity.this, "selected " + position, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
     }
 
     private void newTaskTest() {

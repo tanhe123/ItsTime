@@ -24,13 +24,22 @@ public class MemoAdapter extends BaseAdapter {
     private List<Memo> data;
     private Context context;
     private LayoutInflater inflater;
+    private int idShowMethod = 1;// 决定显示内容，全部，已完成，未完成
 
-    public MemoAdapter(Context context, List<Memo> data) {
+    public MemoAdapter(Context context, List<Memo> data, int idShowMethod) {
         this.context = context;
         this.data = data;
         inflater = LayoutInflater.from(context);
+        this.idShowMethod = idShowMethod;
     }
 
+    public void setIdShowMethod(int idShowMethod) {
+        this.idShowMethod = idShowMethod;
+    }
+
+    public int getIdShowMethod() {
+        return idShowMethod;
+    }
 
     @Override
     public int getCount() {
@@ -67,7 +76,7 @@ public class MemoAdapter extends BaseAdapter {
                     // 切换任务状态
                     item.setFinished(!item.isFinished());
                     MemoManager.updateMemo(context, item);
-                    refresh();
+                    refresh(idShowMethod);
                 }
             });
 
@@ -75,7 +84,7 @@ public class MemoAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View view) {
                     MemoManager.deleteMemo(context, item.getId());
-                    refresh();
+                    refresh(idShowMethod);
                 }
             });
 
@@ -92,7 +101,40 @@ public class MemoAdapter extends BaseAdapter {
         return view;
     }
 
-    public void refresh() {
+    public void refresh(int idShowMethod) {
+        switch (idShowMethod) {
+            case 0:// 显示全部
+                refreshAll();;
+                break;
+            case 1:// 显示未完成
+                refreshUnfinished();
+                break;
+            case 2:
+                refreshFinished();
+                break;
+            default:
+                refreshUnfinished();
+                break;
+        }
+    }
+
+    public void refreshAll() {
+        // 配置 listview
+        // 获取所有的备忘
+        data.clear();
+        data.addAll(MemoManager.getAllMemos(context));
+        this.notifyDataSetChanged();
+    }
+
+    public void refreshFinished() {
+        // 配置 listview
+        // 获取所有的备忘
+        data.clear();
+        data.addAll(MemoManager.getAllFinishedMemos(context));
+        this.notifyDataSetChanged();
+    }
+
+    public void refreshUnfinished() {
         // 配置 listview
         // 获取所有的备忘
         data.clear();

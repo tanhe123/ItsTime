@@ -33,6 +33,16 @@ public class MemoListFragment extends ListFragment {
 
     private MemoAdapter adapter;
 
+    public static final String PARAM_SHOW_METHOD = "SHOW_METHOD";
+    private int idShowMethod;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        idShowMethod = getArguments().getInt(PARAM_SHOW_METHOD, 1);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,12 +56,12 @@ public class MemoListFragment extends ListFragment {
     }
 
     public void setListener() {
-        adapter = new MemoAdapter(getActivity(), memos);
+        adapter = new MemoAdapter(getActivity(), memos, idShowMethod);
 
         //setListAdapter(adapter);
         swipeListView.setAdapter(adapter);
 
-        refresh();
+        refresh(idShowMethod);
 
         swipeListView.setSwipeListViewListener(new BaseSwipeListViewListener() {
             @Override
@@ -72,8 +82,8 @@ public class MemoListFragment extends ListFragment {
         });
     }
 
-    public void refresh() {
-        adapter.refresh();
+    public void refresh(int idShowMethod) {
+        adapter.refresh(idShowMethod);
     }
 
     @Override
