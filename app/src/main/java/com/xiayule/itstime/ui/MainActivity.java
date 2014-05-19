@@ -56,11 +56,12 @@ public class MainActivity extends BaseActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
 
-    String[] mDrawerListTitles = new String[]{NEW_MEMO, SETTING_EMAIL};
+    String[] mDrawerListTitles = new String[]{NEW_MEMO, SETTING_EMAIL, CLEAR_ALL_FINISHED};
 
     private static final String NEW_MEMO = "新建";
     private static final String SYNC_MEMO = "同步";
     private static final String SETTING_EMAIL = "设置邮箱";
+    private static final String CLEAR_ALL_FINISHED = "清除已完成";
 
     private static final int NAVIGATION_SHOW_ALL = 0;
     private static final int NAVIGATION_SHOW_UNFINISHED = 1;
@@ -178,6 +179,8 @@ public class MainActivity extends BaseActivity {
                 if (title.equals(NEW_MEMO)) {// 新建
                     actionAddMemo();
                 } else if (title.equals(SETTING_EMAIL)) {// 设置通知邮箱
+
+                } else if (title.equals(CLEAR_ALL_FINISHED)) {
 
                 }
 
