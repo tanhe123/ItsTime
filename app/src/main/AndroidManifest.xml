@@ -21,6 +21,20 @@
             android:name=".ui.AddMemoActivity"
             android:label="@string/title_activity_add_memo" >
         </activity>
+
+        <!-- 开机启动 -->
+        <receiver android:name=".receiver.BootBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <category android:name="android.intent.category.HOME"/>
+            </intent-filter>
+        </receiver>
+
+        <!-- alarm receiver -->
+        <receiver android:name=".receiver.AlarmReceiver" android:process=".alarmreceiver"/>
     </application>
+
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
 </manifest>
