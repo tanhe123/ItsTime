@@ -7,6 +7,9 @@
     <color name="background_list_back">#e3e3e3</color>
     <color name="background_list_front">#ffffff</color>
 
+    <color name="memo_finished">#999999</color>
+    <color name="memo_unfinished">#ffffff</color>
+
     <color name="red">#E51616</color>
 
     <color name="skin1">#fff85a53</color>

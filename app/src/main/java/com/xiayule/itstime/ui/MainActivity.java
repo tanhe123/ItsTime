@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -85,22 +86,24 @@ public class MainActivity extends BaseActivity {
             int count = getMemoCount();
 
             actionBar.setSelectedNavigationItem(idShowMethod);
-            Bundle args = new Bundle();
-            args.putInt(MemoListFragment.PARAM_SHOW_METHOD, idShowMethod);
 
             if (count == 0) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, new BlankFragment())
                         .commit();
             } else {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, new MemoListFragment())
-                        .commit();
+                refreshMemoListFragment();
             }
         }
 
         // newTaskTest();
     //    PendingAlarmManager.fresh(this);
+    }
+
+    private void refreshMemoListFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, new MemoListFragment())
+                .commit();
     }
 
     private void initActionNavigation() {
@@ -118,7 +121,10 @@ public class MainActivity extends BaseActivity {
                 // 用 position 来表示选择
                 PreferenceService.saveShowMethod(MainActivity.this, position);
 
-                Toast.makeText(MainActivity.this, "selected " + position, Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "selected " + position);
+
+                refreshMemoListFragment();
+
                 return true;
             }
         });
@@ -136,7 +142,6 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initDrawerLayout() {
-        String[] mPlanetTitles = new String[] {"新建", "通知邮箱", "设置"};
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
                 R.layout.drawer_list_item,
                 R.id.item, mDrawerListTitles));

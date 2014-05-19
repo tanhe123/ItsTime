@@ -16,6 +16,7 @@ import com.xiayule.itstime.R;
 import com.xiayule.itstime.adapter.MemoAdapter;
 import com.xiayule.itstime.domain.Memo;
 import com.xiayule.itstime.service.MemoService;
+import com.xiayule.itstime.service.PreferenceService;
 import com.xiayule.itstime.swipelistview.BaseSwipeListViewListener;
 import com.xiayule.itstime.swipelistview.SwipeListView;
 import com.xiayule.itstime.ui.AddMemoActivity;
@@ -33,14 +34,13 @@ public class MemoListFragment extends ListFragment {
 
     private MemoAdapter adapter;
 
-    public static final String PARAM_SHOW_METHOD = "SHOW_METHOD";
     private int idShowMethod;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        idShowMethod = getArguments().getInt(PARAM_SHOW_METHOD, 1);
+        idShowMethod = PreferenceService.getShowMethod(getActivity());
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +70,7 @@ public class MemoAdapter extends BaseAdapter {
             holder.memo_content = (TextView) view.findViewById(R.id.memo_content);
             holder.bt_finish = (Button) view.findViewById(R.id.bt_finish);
             holder.bt_remove = (Button) view.findViewById(R.id.bt_remove);
+            holder.ll_front = (LinearLayout) view.findViewById(R.id.front);
 
             holder.bt_finish.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -98,6 +100,17 @@ public class MemoAdapter extends BaseAdapter {
         holder.memo_date.setText(item.getDate());
         holder.memo_content.setText(item.getContent());
 
+        //TODO: 不同的状态显示不同的效果
+        // memo 完成 和 未完成 展示的效果不同
+        if (item.isFinished()) {
+            holder.bt_finish.setText(R.string.mark_finished);
+            holder.ll_front.setBackgroundColor(view.getResources().getColor(R.color.memo_unfinished));
+        } else {
+            holder.bt_finish.setText(R.string.mark_unfinished);
+            holder.ll_front.setBackgroundColor(view.getResources().getColor(R.color.memo_finished));
+        }
+
+
         return view;
     }
 
@@ -109,7 +122,7 @@ public class MemoAdapter extends BaseAdapter {
             case 1:// 显示未完成
                 refreshUnfinished();
                 break;
-            case 2:
+            case 2:// 显示已完成
                 refreshFinished();
                 break;
             default:
@@ -148,5 +161,7 @@ public class MemoAdapter extends BaseAdapter {
 
         Button bt_finish;
         Button bt_remove;
+
+        LinearLayout ll_front;
     }
 }
