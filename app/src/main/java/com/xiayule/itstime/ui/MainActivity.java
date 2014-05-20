@@ -96,8 +96,7 @@ public class MainActivity extends BaseActivity {
             }
         }
 
-        // newTaskTest();
-    //    PendingAlarmManager.fresh(this);
+        
     }
 
     private void refreshMemoListFragment() {
