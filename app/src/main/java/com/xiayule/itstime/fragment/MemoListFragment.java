@@ -1,6 +1,9 @@
 package com.xiayule.itstime.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -28,6 +31,8 @@ public class MemoListFragment extends ListFragment {
 
     private MemoAdapter adapter;
 
+    private MyBroadcastReceiver br;
+
     private int idShowMethod;
 
     @Override
@@ -35,6 +40,12 @@ public class MemoListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         idShowMethod = PreferenceService.getShowMethod(getActivity());
+
+        // 注册广播
+        IntentFilter myIntentFilter = new IntentFilter();
+        myIntentFilter.addAction(getResources().getString(R.string.broadcast_update_action));
+        br = new MyBroadcastReceiver();
+        getActivity().registerReceiver(br, myIntentFilter);
     }
 
     @Override
@@ -95,5 +106,20 @@ public class MemoListFragment extends ListFragment {
         intent.putExtra(AddMemoActivity.PARAM_CONTENT, memo.getContent());
 
         startActivity(intent);
+    }
+
+    @Override
+    public void onStop() {
+        // 注销广播
+        getActivity().unregisterReceiver(br);
+        super.onStop();
+    }
+
+    //广播接收器
+    public class MyBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            refresh(idShowMethod);
+        }
     }
 }

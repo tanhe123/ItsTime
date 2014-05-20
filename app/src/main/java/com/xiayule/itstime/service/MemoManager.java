@@ -46,6 +46,12 @@ public class MemoManager {
         service.delete(id);
     }
 
+    public static void addMemo(Context context, String date, String content) {
+        MemoService service = new MemoService(context);
+        Memo memo = new Memo(date, content);
+        service.save(memo);
+    }
+
     public static void updateMemo(Context context, Memo memo) {
         MemoService service = new MemoService(context);
         service.update(memo);

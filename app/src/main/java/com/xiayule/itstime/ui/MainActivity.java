@@ -1,5 +1,7 @@
 package com.xiayule.itstime.ui;
 
+import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -15,15 +17,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.xiayule.itstime.R;
+import com.xiayule.itstime.comp.AddMemoDialog;
 import com.xiayule.itstime.fragment.BlankFragment;
 import com.xiayule.itstime.fragment.MemoListFragment;
 import com.xiayule.itstime.service.LocalService;
 import com.xiayule.itstime.service.MemoService;
 import com.xiayule.itstime.service.PreferenceService;
-import com.xiayule.itstime.utils.AlarmTask;
-
-import java.util.Calendar;
-
+import com.xiayule.itstime.utils.PendingAlarmManager;
 
 /*
 TODO:
@@ -47,7 +47,6 @@ TODO:
 3. 开机启动
 4. 数据库增加字段 finished
 */
-
 public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
@@ -56,16 +55,14 @@ public class MainActivity extends BaseActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
 
+    public MemoListFragment memoListFragment;
+
     String[] mDrawerListTitles = new String[]{NEW_MEMO, SETTING_EMAIL, CLEAR_ALL_FINISHED};
 
-    private static final String NEW_MEMO = "新建";
+    private static final String NEW_MEMO = "高级创建";
     private static final String SYNC_MEMO = "同步";
     private static final String SETTING_EMAIL = "设置邮箱";
     private static final String CLEAR_ALL_FINISHED = "清除已完成";
-
-    private static final int NAVIGATION_SHOW_ALL = 0;
-    private static final int NAVIGATION_SHOW_UNFINISHED = 1;
-    private static final int NAVIGATION_SHOW_FINISHED = 2;
 
     private int idShowMethod;// 决定如何显示，全部，未完成，已完成
 
@@ -97,7 +94,8 @@ public class MainActivity extends BaseActivity {
             }
         }
 
-        initService();
+        //initService();
+        PendingAlarmManager.freshAllAlarm(this);
     }
 
     private void initService() {
@@ -107,8 +105,10 @@ public class MainActivity extends BaseActivity {
     }
 
     private void refreshMemoListFragment() {
+        memoListFragment = new MemoListFragment();
+
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, new MemoListFragment())
+                .replace(R.id.container, memoListFragment)
                 .commit();
     }
 
@@ -175,8 +175,9 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 String title = mDrawerListTitles[position];
-                if (title.equals(NEW_MEMO)) {// 新建
+                if (title.equals(NEW_MEMO)) {// 快速新建
                     actionAddMemo();
+                    refreshMemoListFragment();
                 } else if (title.equals(SETTING_EMAIL)) {// 设置通知邮箱
 
                 } else if (title.equals(CLEAR_ALL_FINISHED)) {
@@ -210,7 +211,10 @@ public class MainActivity extends BaseActivity {
 
         switch (item.getItemId()) {
             case R.id.action_add_memo:
-                actionAddMemo();
+                //actionAddMemo();
+                AlertDialog dialog = AddMemoDialog.getNewMemoDialog(MainActivity.this);
+                dialog.show();
+
                 break;
             default:
                 return super.onOptionsItemSelected(item);
