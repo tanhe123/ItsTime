@@ -27,6 +27,7 @@ import java.util.Calendar;
 
 /*
 TODO:
+* listview item position 错误
 * 每次启动应用 更新 待办提醒
 
 1. 动态修改 actionbar， 如长按 list item， 然后可以删除，可以标记为已完成
@@ -102,6 +103,7 @@ public class MainActivity extends BaseActivity {
     private void initService() {
         Intent intent = new Intent(this, LocalService.class);
         startService(intent);
+        Log.d(TAG, "准备启动 service");
     }
 
     private void refreshMemoListFragment() {
