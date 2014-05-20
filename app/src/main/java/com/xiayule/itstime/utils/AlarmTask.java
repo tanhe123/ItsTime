@@ -23,7 +23,7 @@ public class AlarmTask {
     private static final String TAG = "AlarmTask";
 
     public static void newTask(Context context, long millis, int alarmId) {
-        Intent intent = new Intent(context,AlarmReceiver.class);
+        Intent intent = new Intent(context, AlarmReceiver.class);
 
         intent.putExtra("_id", alarmId);
 

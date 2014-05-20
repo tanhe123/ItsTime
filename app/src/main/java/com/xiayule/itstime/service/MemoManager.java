@@ -1,10 +1,11 @@
-package com.xiayule.itstime.utils;
+package com.xiayule.itstime.service;
 
 import android.content.Context;
 
 import com.xiayule.itstime.domain.Memo;
 import com.xiayule.itstime.service.MemoService;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,33 +22,21 @@ public class MemoManager {
      * 获得所有的 memo, 顺序是先未完成，再完成
      * @param context
      * @return
-     */
+    */
     public static List<Memo> getAllMemos(Context context) {
         MemoService service = new MemoService(context);
-        return service.getAllMemos();
+        List<Memo> memos = new ArrayList<Memo>();
+        memos.addAll(getAllUnfinishedMemos(context));
+        memos.addAll(getAllFinishedMemos(context));
+        return memos;
     }
 
     public static List<Memo> getAllFinishedMemos(Context context) {
-/*        List<Memo> memos = getAllMemos(context);
-        Iterator<Memo> ita = memos.iterator();
-        while (ita.hasNext()) {
-            Memo memo = ita.next();
-            if (!memo.isFinished()) ita.remove();
-        }
-
-        return memos;*/
         MemoService service = new MemoService(context);
         return service.getFinishedMemos();
     }
 
     public static List<Memo> getAllUnfinishedMemos(Context context) {
-  /*      List<Memo> memos = getAllMemos(context);
-        Iterator<Memo> ita = memos.iterator();
-        while (ita.hasNext()) {
-            Memo memo = ita.next();
-            if (memo.isFinished()) ita.remove();
-        }
-*/
         MemoService service = new MemoService(context);
         return service.getUnfinishedMemos();
     }
@@ -60,5 +49,10 @@ public class MemoManager {
     public static void updateMemo(Context context, Memo memo) {
         MemoService service = new MemoService(context);
         service.update(memo);
+    }
+
+    public static void clearAllFinished(Context context) {
+        MemoService service = new MemoService(context);
+        service.clearFinished();
     }
 }

@@ -1,7 +1,7 @@
 package com.xiayule.itstime.adapter;
 
 import android.content.Context;
-import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +9,11 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.xiayule.itstime.R;
 import com.xiayule.itstime.domain.Memo;
 import com.xiayule.itstime.swipelistview.SwipeListView;
-import com.xiayule.itstime.utils.MemoManager;
+import com.xiayule.itstime.service.MemoManager;
 
 import java.util.List;
 
@@ -22,6 +21,8 @@ import java.util.List;
  * Created by tan on 14-5-18.
  */
 public class MemoAdapter extends BaseAdapter {
+    private static final String TAG = "MemoAdapter";
+
     private List<Memo> data;
     private Context context;
     private LayoutInflater inflater;
@@ -58,7 +59,7 @@ public class MemoAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup viewGroup) {
+    public View getView(final int position, View view, ViewGroup viewGroup) {
         final Memo item = getItem(position);
         ViewHolder holder;
 
@@ -77,6 +78,7 @@ public class MemoAdapter extends BaseAdapter {
                     // 切换任务状态
                     item.setFinished(!item.isFinished());
                     MemoManager.updateMemo(context, item);
+                    Log.d(TAG, "position: " + position + " content: " + item.getContent());
                     refresh(idShowMethod);
                 }
             });
@@ -100,17 +102,17 @@ public class MemoAdapter extends BaseAdapter {
         holder.memo_content.setText(item.getContent());
 
         //TODO: 不同的状态显示不同的效果
-        // memo 完成 和 未完成 展示的效果不同
-        if (!item.isFinished()) {
-            holder.bt_finish.setText(R.string.mark_finished);
-            holder.ll_front.setBackgroundColor(view.getResources().getColor(R.color.memo_unfinished));
-        } else {
-            holder.bt_finish.setText(R.string.mark_unfinished);
-            holder.ll_front.setBackgroundColor(view.getResources().getColor(R.color.memo_finished));
-        }
-
-        return view;
+    // memo 完成 和 未完成 展示的效果不同
+    if (!item.isFinished()) {
+        holder.bt_finish.setText(R.string.mark_finished);
+        holder.ll_front.setBackgroundColor(view.getResources().getColor(R.color.memo_unfinished));
+    } else {
+        holder.bt_finish.setText(R.string.mark_unfinished);
+        holder.ll_front.setBackgroundColor(view.getResources().getColor(R.color.memo_finished));
     }
+
+    return view;
+}
 
     public void refresh(int idShowMethod) {
         switch (idShowMethod) {
@@ -151,6 +153,10 @@ public class MemoAdapter extends BaseAdapter {
         data.clear();
         data.addAll(MemoManager.getAllUnfinishedMemos(context));
         this.notifyDataSetChanged();
+    }
+
+    public void clearFinished() {
+        MemoManager.clearAllFinished(context);
     }
 
     class ViewHolder {

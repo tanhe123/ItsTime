@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.xiayule.itstime.domain.Memo;
 import com.xiayule.itstime.ui.MainActivity;
-import com.xiayule.itstime.utils.MemoManager;
+import com.xiayule.itstime.service.MemoManager;
 
 /**
  * Created by tan on 14-5-16.

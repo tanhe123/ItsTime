@@ -3,27 +3,21 @@ package com.xiayule.itstime.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.text.method.CharacterPickerDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import com.xiayule.itstime.R;
 import com.xiayule.itstime.adapter.MemoAdapter;
 import com.xiayule.itstime.domain.Memo;
-import com.xiayule.itstime.service.MemoService;
 import com.xiayule.itstime.service.PreferenceService;
 import com.xiayule.itstime.swipelistview.BaseSwipeListViewListener;
 import com.xiayule.itstime.swipelistview.SwipeListView;
 import com.xiayule.itstime.ui.AddMemoActivity;
-import com.xiayule.itstime.utils.MemoManager;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class MemoListFragment extends ListFragment {

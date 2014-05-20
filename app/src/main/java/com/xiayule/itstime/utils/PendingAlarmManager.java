@@ -2,7 +2,9 @@ package com.xiayule.itstime.utils;
 
 import android.content.Context;
 
+import com.xiayule.itstime.comp.MNotification;
 import com.xiayule.itstime.domain.Memo;
+import com.xiayule.itstime.service.MemoManager;
 import com.xiayule.itstime.service.MemoService;
 
 import java.util.Iterator;
@@ -12,23 +14,15 @@ import java.util.List;
  * Created by tan on 14-5-17.
  */
 public class PendingAlarmManager {
-    public static void fresh(Context context) {
-        MemoService service = new MemoService(context);
-        List<Memo> memos = service.getAllMemos();
+    public static void freshAllAlarm(Context context) {
+        List<Memo> memos = MemoManager.getAllUnfinishedMemos(context);
 
-        Iterator<Memo> ita = memos.iterator();
-
-        // 删除所有已完成的
-        while (ita.hasNext()) {
-            Memo memo = ita.next();
-            if (memo.isFinished()) {
-                ita.remove();
-            }
-        }
+        // 提示有任务要完成，但不提醒具体内容
+        MNotification.shwoNotification(context, "有任务要去处理哦", memos.size());
 
         // 设置待办提醒
-        for (Memo memo : memos) {
-            AlarmTask.newTask(context, memo.getDate(), memo.getId());
-        }
+//        for (Memo memo : memos) {
+  //          AlarmTask.newTask(context, memo.getDate(), memo.getId());
+    //    }
     }
 }
