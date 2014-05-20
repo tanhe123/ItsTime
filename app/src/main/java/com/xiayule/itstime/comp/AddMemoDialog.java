@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.xiayule.itstime.R;
+import com.xiayule.itstime.service.BroadCastService;
 import com.xiayule.itstime.service.MemoManager;
 import com.xiayule.itstime.ui.MainActivity;
 import com.xiayule.itstime.utils.Time;
@@ -35,9 +36,8 @@ public class AddMemoDialog {
                                 Time.getDate(),// 获取当前时间
                                 content);
 
-                        // 发送更新广播
-                        Intent intent = new Intent(context.getResources().getString(R.string.broadcast_update_action));
-                        context.sendBroadcast(intent);
+                        // 通知已经更新
+                        BroadCastService.sendBroadCastUpdate(context);
                     }
                 })
 

@@ -19,6 +19,7 @@ import com.xiayule.itstime.service.PreferenceService;
 import com.xiayule.itstime.swipelistview.BaseSwipeListViewListener;
 import com.xiayule.itstime.swipelistview.SwipeListView;
 import com.xiayule.itstime.ui.AddMemoActivity;
+import com.xiayule.itstime.utils.PendingAlarmManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,6 +121,7 @@ public class MemoListFragment extends ListFragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             refresh(idShowMethod);
+            PendingAlarmManager.freshAllAlarm(context);
         }
     }
 }

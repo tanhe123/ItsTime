@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import com.xiayule.itstime.R;
 import com.xiayule.itstime.comp.AddMemoDialog;
 import com.xiayule.itstime.fragment.BlankFragment;
@@ -27,25 +29,33 @@ import com.xiayule.itstime.utils.PendingAlarmManager;
 
 /*
 TODO:
-* listview item position 错误
-* 每次启动应用 更新 待办提醒
 
-1. 动态修改 actionbar， 如长按 list item， 然后可以删除，可以标记为已完成
+* 每次启动应用 更新 待办提醒
+* 让　notification 删不掉
+
+0.日历视图， 同步 google 日历, 定时任务，每周固定时间
 3. 待办提醒(用每个待办的数据库id作为 通知id，防止相同)
 4. 邮件通知
-5. Notification notification 显示 现在去做（稍后会继续提醒）， 已完成 两个选项， 如果第二次显示则显示 正在做和已完成
 * 如果有多条要合并，并显示条数（或者合并，单击 展开)
 6. 完成积分 排行
-7. 配置文件读取
 8. 要兼容弹出输入法的布局
 9. 美化 listview
 10. 一般的 memo 不用设置日期, 紧急memo设定日期，同时要有通知功能
+11. 清除所有已完成　通过 broadcast 实现
 
 已解决:
 1. Navigation (actionbar 显示 indacator)
 2. listview
 3. 开机启动
 4. 数据库增加字段 finished
+5. 配置文件读取
+6. listview item position 错误
+
+
+删除:
+1. Notification notification 显示 现在去做（稍后会继续提醒）， 已完成 两个选项， 如果第二次显示则显示 正在做和已完成
+2. 动态修改 actionbar， 如长按 list item， 然后可以删除，可以标记为已完成
+
 */
 public class MainActivity extends BaseActivity {
 
@@ -177,9 +187,8 @@ public class MainActivity extends BaseActivity {
                 String title = mDrawerListTitles[position];
                 if (title.equals(NEW_MEMO)) {// 快速新建
                     actionAddMemo();
-                    refreshMemoListFragment();
                 } else if (title.equals(SETTING_EMAIL)) {// 设置通知邮箱
-
+                    Toast.makeText(MainActivity.this, "该功能马上到来!!!", Toast.LENGTH_SHORT).show();
                 } else if (title.equals(CLEAR_ALL_FINISHED)) {
 
                 }
