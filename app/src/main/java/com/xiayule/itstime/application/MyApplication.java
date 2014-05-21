@@ -24,12 +24,12 @@ TODO:
 6. 完成积分 排行
 8. 要兼容弹出输入法的布局
 9. 美化 listview
-
+3. 开机启动
 
 已解决:
 1. Navigation (actionbar 显示 indacator)
 2. listview
-3. 开机启动
+
 4. 数据库增加字段 finished
 5. 配置文件读取
 6. listview item position 错误
