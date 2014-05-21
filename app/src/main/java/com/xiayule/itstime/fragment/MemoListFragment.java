@@ -15,11 +15,11 @@ import android.widget.ListView;
 import com.xiayule.itstime.R;
 import com.xiayule.itstime.adapter.MemoAdapter;
 import com.xiayule.itstime.domain.Memo;
+import com.xiayule.itstime.service.BroadCastService;
 import com.xiayule.itstime.service.PreferenceService;
 import com.xiayule.itstime.swipelistview.BaseSwipeListViewListener;
 import com.xiayule.itstime.swipelistview.SwipeListView;
 import com.xiayule.itstime.ui.AddMemoActivity;
-import com.xiayule.itstime.utils.PendingAlarmManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,13 +41,8 @@ public class MemoListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         idShowMethod = PreferenceService.getShowMethod(getActivity());
-
-        // 注册广播
-        IntentFilter myIntentFilter = new IntentFilter();
-        myIntentFilter.addAction(getResources().getString(R.string.broadcast_update_action));
-        br = new MyBroadcastReceiver();
-        getActivity().registerReceiver(br, myIntentFilter);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -110,6 +105,14 @@ public class MemoListFragment extends ListFragment {
     }
 
     @Override
+    public void onStart() {
+        // 注册广播
+        br = new MyBroadcastReceiver();
+        BroadCastService.registerBroadCastUpdate(getActivity(), br);
+        super.onStart();
+    }
+
+    @Override
     public void onStop() {
         // 注销广播
         getActivity().unregisterReceiver(br);
@@ -121,7 +124,6 @@ public class MemoListFragment extends ListFragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             refresh(idShowMethod);
-            PendingAlarmManager.freshAllAlarm(context);
         }
     }
 }

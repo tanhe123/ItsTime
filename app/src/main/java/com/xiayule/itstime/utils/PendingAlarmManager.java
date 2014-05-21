@@ -20,10 +20,5 @@ public class PendingAlarmManager {
         // 提示有任务要完成，但不提醒具体内容
         MNotification.shwoNotification(context,
                 "有"+memos.size()+"个任务要去处理哦", memos.size());
-
-        // 设置待办提醒
-//        for (Memo memo : memos) {
-  //          AlarmTask.newTask(context, memo.getDate(), memo.getId());
-    //    }
     }
 }

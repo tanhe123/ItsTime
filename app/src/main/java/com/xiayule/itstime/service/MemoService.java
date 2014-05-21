@@ -42,7 +42,7 @@ public class MemoService {
 
     public void clearFinished() {
         SQLiteDatabase db = memoDatabaseHelper.getWritableDatabase();
-        db.execSQL("delete from memos where finished=1", null);
+        db.execSQL("delete from memos where finished=1", new Object[]{});
         db.close();
     }
 

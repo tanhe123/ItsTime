@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.xiayule.itstime.R;
 import com.xiayule.itstime.domain.Memo;
+import com.xiayule.itstime.service.BroadCastService;
 import com.xiayule.itstime.swipelistview.SwipeListView;
 import com.xiayule.itstime.service.MemoManager;
 
@@ -80,6 +81,8 @@ public class MemoAdapter extends BaseAdapter {
                     MemoManager.updateMemo(context, item);
                     Log.d(TAG, "position: " + position + " content: " + item.getContent());
                     refresh(idShowMethod);
+
+                    BroadCastService.sendBroadCastUpdate(context);
                 }
             });
 
