@@ -79,10 +79,12 @@ public class MemoAdapter extends BaseAdapter {
                     // 切换任务状态
                     item.setFinished(!item.isFinished());
                     MemoManager.updateMemo(context, item);
-                    Log.d(TAG, "position: " + position + " content: " + item.getContent());
+                    Log.i(TAG, "position: " + position + " content: " + item.getContent());
                     refresh(idShowMethod);
 
+                    Log.i(TAG, "in position 0 is : " + getItem(0));
                     BroadCastService.sendBroadCastUpdate(context);
+
                 }
             });
 

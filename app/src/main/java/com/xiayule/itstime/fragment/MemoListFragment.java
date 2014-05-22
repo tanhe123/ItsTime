@@ -3,7 +3,6 @@ package com.xiayule.itstime.fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -41,6 +40,10 @@ public class MemoListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         idShowMethod = PreferenceService.getShowMethod(getActivity());
+
+        // 注册广播
+        br = new MyBroadcastReceiver();
+        BroadCastService.registerBroadCastUpdate(getActivity(), br);
     }
 
 
@@ -105,18 +108,10 @@ public class MemoListFragment extends ListFragment {
     }
 
     @Override
-    public void onStart() {
-        // 注册广播
-        br = new MyBroadcastReceiver();
-        BroadCastService.registerBroadCastUpdate(getActivity(), br);
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
+    public void onDestroy() {
         // 注销广播
         getActivity().unregisterReceiver(br);
-        super.onStop();
+        super.onDestroy();
     }
 
     //广播接收器

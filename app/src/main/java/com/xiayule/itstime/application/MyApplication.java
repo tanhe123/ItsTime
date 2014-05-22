@@ -14,7 +14,7 @@ import com.xiayule.itstime.utils.PendingAlarmManager;
 TODO:
 
 * 每次启动应用 更新 待办提醒
-* 让　notification 删不掉
+
 
 
 1. 新建笔记添加导航
@@ -35,6 +35,7 @@ TODO:
 6. listview item position 错误
 7. 一般的 memo 不用设置日期(日期默认当天), 重要memo可设定日期，同时要有通知功能
 8. 清除所有已完成　通过 broadcast 实现
+9. 让　notification 删不掉
 
 删除:
 1. Notification notification 显示 现在去做（稍后会继续提醒）， 已完成 两个选项， 如果第二次显示则显示 正在做和已完成
