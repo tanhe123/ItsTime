@@ -13,9 +13,8 @@ import com.xiayule.itstime.utils.PendingAlarmManager;
 /*
 TODO:
 
+* 2.3 真机 闪退
 * 每次启动应用 更新 待办提醒
-
-
 
 1. 新建笔记添加导航
 0.日历视图， 同步 google 日历, 定时任务，每周固定时间

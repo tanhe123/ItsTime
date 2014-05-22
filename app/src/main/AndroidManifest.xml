@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xiayule.itstime">
 
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="17"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"

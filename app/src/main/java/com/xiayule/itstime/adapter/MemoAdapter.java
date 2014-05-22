@@ -82,9 +82,7 @@ public class MemoAdapter extends BaseAdapter {
                     Log.i(TAG, "position: " + position + " content: " + item.getContent());
                     refresh(idShowMethod);
 
-                    Log.i(TAG, "in position 0 is : " + getItem(0));
                     BroadCastService.sendBroadCastUpdate(context);
-
                 }
             });
 

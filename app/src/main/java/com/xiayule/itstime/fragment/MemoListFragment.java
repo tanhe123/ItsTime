@@ -65,8 +65,6 @@ public class MemoListFragment extends ListFragment {
         //setListAdapter(adapter);
         swipeListView.setAdapter(adapter);
 
-        refresh(idShowMethod);
-
         swipeListView.setSwipeListViewListener(new BaseSwipeListViewListener() {
             @Override
             public void onClickFrontView(int position) {
@@ -84,6 +82,8 @@ public class MemoListFragment extends ListFragment {
                 startActivity(intent);
             }
         });
+
+        refresh(idShowMethod);
     }
 
     public void refresh(int idShowMethod) {
