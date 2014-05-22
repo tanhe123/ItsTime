@@ -1054,7 +1054,5 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
         }
 
         resetPendingDismisses();
-
     }
-
 }

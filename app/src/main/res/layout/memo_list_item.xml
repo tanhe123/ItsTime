@@ -9,7 +9,7 @@
         android:id="@id/back"
         android:tag="back"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="120dp"
         android:orientation="horizontal"
         >
 
@@ -33,7 +33,7 @@
         android:id="@id/front"
         android:tag="front"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="120dp"
         android:orientation="vertical"
         android:background="@drawable/layout_selector"
         android:padding="@dimen/padding_large"
