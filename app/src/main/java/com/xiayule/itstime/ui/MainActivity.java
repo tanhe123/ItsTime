@@ -14,21 +14,24 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
-
 import com.xiayule.itstime.R;
-import com.xiayule.itstime.comp.MNotification;
 import com.xiayule.itstime.fragment.BlankFragment;
 import com.xiayule.itstime.fragment.MemoListFragment;
+import com.xiayule.itstime.service.LocalService;
+import com.xiayule.itstime.service.MemoManager;
 import com.xiayule.itstime.service.MemoService;
 import com.xiayule.itstime.service.PreferenceService;
 import com.xiayule.itstime.utils.AlarmTask;
+import com.xiayule.itstime.utils.PendingAlarmManager;
 
 import java.util.Calendar;
 
 
 /*
 TODO:
+添加即为快速添加， 没有通知，当标记为重要，才会设置日期，通知
+
+
 * 每次启动应用 更新 待办提醒
 
 1. 动态修改 actionbar， 如长按 list item， 然后可以删除，可以标记为已完成
@@ -40,12 +43,14 @@ TODO:
 7. 配置文件读取
 8. 要兼容弹出输入法的布局
 9. 美化 listview
+10. 一般的 memo 不用设置日期, 紧急memo设定日期，同时要有通知功能
 
 已解决:
 1. Navigation (actionbar 显示 indacator)
 2. listview
 3. 开机启动
 4. 数据库增加字段 finished
+5. 修正 listview item position 错误
 */
 
 public class MainActivity extends BaseActivity {
@@ -55,12 +60,14 @@ public class MainActivity extends BaseActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
+    private MemoListFragment memoListFragment;
 
-    String[] mDrawerListTitles = new String[]{NEW_MEMO, SETTING_EMAIL};
+    String[] mDrawerListTitles = new String[]{NEW_MEMO, SETTING_EMAIL, CLEAR_ALL_FINISHED};
 
     private static final String NEW_MEMO = "新建";
     private static final String SYNC_MEMO = "同步";
     private static final String SETTING_EMAIL = "设置邮箱";
+    private static final String CLEAR_ALL_FINISHED = "清除已完成";
 
     private static final int NAVIGATION_SHOW_ALL = 0;
     private static final int NAVIGATION_SHOW_UNFINISHED = 1;
@@ -96,12 +103,21 @@ public class MainActivity extends BaseActivity {
             }
         }
 
-        
+//        initService();
+        PendingAlarmManager.freshAllAlarm(this);
+    }
+
+    private void initService() {
+        Intent intent = new Intent(this, LocalService.class);
+        startService(intent);
+        Log.d(TAG, "准备启动 service");
     }
 
     private void refreshMemoListFragment() {
+        memoListFragment = new MemoListFragment();
+
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, new MemoListFragment())
+                .replace(R.id.container, memoListFragment)
                 .commit();
     }
 
@@ -127,12 +143,6 @@ public class MainActivity extends BaseActivity {
                 return true;
             }
         });
-    }
-
-    private void newTaskTest() {
-        Calendar c =  Calendar.getInstance();
-        AlarmTask.newTask(this, c.getTimeInMillis()+5000, 1);
-
     }
 
     private void initComp() {
@@ -178,21 +188,13 @@ public class MainActivity extends BaseActivity {
                     actionAddMemo();
                 } else if (title.equals(SETTING_EMAIL)) {// 设置通知邮箱
 
+                } else if (title.equals(CLEAR_ALL_FINISHED)) {
+                    memoListFragment.clearFinishedMemo();
                 }
 
                 mDrawerLayout.closeDrawer(mDrawerList);
             }
         });
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        //TODO: 动态修改 actionbar
-        MenuInflater inflater = getMenuInflater();
-        //       menu.clear();;
-        //     inflater.inflate(R.menu.memu_add_memo, menu);
-
-        return super.onPrepareOptionsMenu(menu);
     }
 
     public int getMemoCount() {
@@ -256,7 +258,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        MNotification.shwoNotification(this, "该起床喽");
+     //   MNotification.shwoNotification(this, "该起床喽");
     }
 
     @Override

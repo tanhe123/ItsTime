@@ -42,15 +42,21 @@ public class MemoServiceTest extends AndroidTestCase {
         Log.i(TAG, count+"  m");
     }
 
-    public void testGetScrollData() throws Exception {
+    public void testGetAllMemos() throws Exception {
         MemoService service = new MemoService(getContext());
-        List<Memo> memos = service.getScrollData();
-        Log.i(TAG, memos.toString());
+        List<Memo> memos = service.getAllMemos();
+        Log.d(TAG, memos.toString());
+    }
+
+    public void testGetFinishedMemos() {
+        MemoService service = new MemoService(getContext());
+        List<Memo> memos = service.getFinishedMemos();
+        Log.d(TAG, memos.toString());
     }
 
     public void test() {
         MemoService service = new MemoService(getContext());
-        List<Memo> memos = service.getScrollData();
+        List<Memo> memos = service.getAllMemos();
 
         Iterator<Memo> ita = memos.iterator();
 

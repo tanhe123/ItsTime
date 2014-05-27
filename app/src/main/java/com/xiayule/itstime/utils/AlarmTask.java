@@ -16,14 +16,11 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created by tan on 14-5-16.
- */
 public class AlarmTask {
     private static final String TAG = "AlarmTask";
 
     public static void newTask(Context context, long millis, int alarmId) {
-        Intent intent = new Intent(context,AlarmReceiver.class);
+        Intent intent = new Intent(context, AlarmReceiver.class);
 
         intent.putExtra("_id", alarmId);
 
@@ -33,8 +30,6 @@ public class AlarmTask {
         //获取AlarmManager对象
 
         Log.i(TAG, "收到 newTask");
-        Toast.makeText(context, "有新的待办要处理哦", Toast.LENGTH_SHORT).show();
-
 
         // 指定事件启动
         am.set(AlarmManager.RTC_WAKEUP, millis, pi);
@@ -68,7 +63,7 @@ public class AlarmTask {
         Calendar c = Calendar.getInstance();
 
         c.set(Calendar.YEAR, year);
-        c.set(Calendar.MONTH, month-1); //也可以填数字，0-11,一月为0 或者用 类似Calenday.MAY
+        c.set(Calendar.MONTH, month-1); //也可以填数字，0-11,一月为0 或者用 类似 Calenday.MAY
         c.set(Calendar.DAY_OF_MONTH, day);
         c.set(Calendar.HOUR_OF_DAY, hour);
         c.set(Calendar.MINUTE, minute);

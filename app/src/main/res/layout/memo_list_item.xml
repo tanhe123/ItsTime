@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:orientation="vertical"
-        android:background="@drawable/list_item_selector"
+        android:background="@drawable/layout_selector"
         android:padding="@dimen/padding_large"
         >
 

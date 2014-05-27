@@ -20,7 +20,7 @@ public class MNotification {
     // mId allows you to update the notification later on.
     public static final int notifyId = 1;
 
-    public static void shwoNotification(Context context, String contentText) {
+    public static void shwoNotification(Context context, String contentText, int number) {
         mContext = context;
 
         NotificationCompat.Builder mBuilder =
@@ -29,8 +29,8 @@ public class MNotification {
                         .setContentTitle("Its time")
                         .setContentText(contentText)
                         .setTicker("有新的任务要去完成喽")
-                        .setContentInfo("10") //2.x 好像不支持
-                        .setNumber(12)
+                        //.setContentInfo(number) //2.x 好像不支持
+                        .setNumber(number)
                         .setAutoCancel(false);
 
         // Creates an explicit intent for an Activity in your app
