@@ -1,5 +1,7 @@
 package com.xiayule.itstime.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -12,6 +14,7 @@ import android.widget.ListView;
 import com.xiayule.itstime.R;
 import com.xiayule.itstime.adapter.MemoAdapter;
 import com.xiayule.itstime.domain.Memo;
+import com.xiayule.itstime.service.BroadCastService;
 import com.xiayule.itstime.service.PreferenceService;
 import com.xiayule.itstime.swipelistview.BaseSwipeListViewListener;
 import com.xiayule.itstime.swipelistview.SwipeListView;
@@ -28,6 +31,8 @@ public class MemoListFragment extends ListFragment {
 
     private MemoAdapter adapter;
 
+    private MyBroadcastReceiver br;
+
     private int idShowMethod;
 
     @Override
@@ -35,10 +40,10 @@ public class MemoListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         idShowMethod = PreferenceService.getShowMethod(getActivity());
-    }
 
-    public void clearFinishedMemo() {
-        adapter.clearFinished();
+        // 注册广播
+        br = new MyBroadcastReceiver();
+        BroadCastService.registerBroadCastUpdate(getActivity(), br);
     }
 
     @Override
@@ -59,8 +64,6 @@ public class MemoListFragment extends ListFragment {
         //setListAdapter(adapter);
         swipeListView.setAdapter(adapter);
 
-        refresh(idShowMethod);
-
         swipeListView.setSwipeListViewListener(new BaseSwipeListViewListener() {
             @Override
             public void onClickFrontView(int position) {
@@ -78,6 +81,8 @@ public class MemoListFragment extends ListFragment {
                 startActivity(intent);
             }
         });
+
+        refresh(idShowMethod);
     }
 
     public void refresh(int idShowMethod) {
@@ -99,5 +104,20 @@ public class MemoListFragment extends ListFragment {
         intent.putExtra(AddMemoActivity.PARAM_CONTENT, memo.getContent());
 
         startActivity(intent);
+    }
+
+    @Override
+    public void onDestroy() {
+        // 注销广播
+        getActivity().unregisterReceiver(br);
+        super.onDestroy();
+    }
+
+    //广播接收器
+    public class MyBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            refresh(idShowMethod);
+        }
     }
 }

@@ -11,7 +11,6 @@ public class PreferenceService {
 
     public static final String METHOD_SHOW = "显示";
 
-
     public static void saveShowMethod(Context context, int method) {
         SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();

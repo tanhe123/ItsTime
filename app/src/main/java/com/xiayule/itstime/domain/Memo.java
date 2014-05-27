@@ -17,6 +17,10 @@ public class Memo {
         this.id = id;
     }
 
+    public Memo(String content, boolean isFinished) {
+        this(null, content, isFinished);
+    }
+
     public Memo(String date, String content) {
         this(date, content, false);
     }

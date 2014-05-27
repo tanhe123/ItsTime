@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.xiayule.itstime.R;
 import com.xiayule.itstime.domain.Memo;
+import com.xiayule.itstime.service.BroadCastService;
 import com.xiayule.itstime.service.MemoService;
 import com.xiayule.itstime.utils.Time;
 
@@ -142,6 +143,7 @@ public class AddMemoActivity extends BaseActivity {
 
                 Toast.makeText(this, "成功", Toast.LENGTH_SHORT).show();
 
+                BroadCastService.sendBroadCastUpdate(this);
                 backHome();
 
                 break;

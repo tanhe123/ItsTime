@@ -1,5 +1,7 @@
 package com.xiayule.itstime.ui;
 
+import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -14,44 +16,19 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import com.xiayule.itstime.R;
+import com.xiayule.itstime.comp.AddMemoDialog;
 import com.xiayule.itstime.fragment.BlankFragment;
 import com.xiayule.itstime.fragment.MemoListFragment;
+import com.xiayule.itstime.service.BroadCastService;
 import com.xiayule.itstime.service.LocalService;
 import com.xiayule.itstime.service.MemoManager;
 import com.xiayule.itstime.service.MemoService;
 import com.xiayule.itstime.service.PreferenceService;
-import com.xiayule.itstime.utils.AlarmTask;
+
 import com.xiayule.itstime.utils.PendingAlarmManager;
-
-import java.util.Calendar;
-
-
-/*
-TODO:
-添加即为快速添加， 没有通知，当标记为重要，才会设置日期，通知
-
-
-* 每次启动应用 更新 待办提醒
-
-1. 动态修改 actionbar， 如长按 list item， 然后可以删除，可以标记为已完成
-3. 待办提醒(用每个待办的数据库id作为 通知id，防止相同)
-4. 邮件通知
-5. Notification notification 显示 现在去做（稍后会继续提醒）， 已完成 两个选项， 如果第二次显示则显示 正在做和已完成
-* 如果有多条要合并，并显示条数（或者合并，单击 展开)
-6. 完成积分 排行
-7. 配置文件读取
-8. 要兼容弹出输入法的布局
-9. 美化 listview
-10. 一般的 memo 不用设置日期, 紧急memo设定日期，同时要有通知功能
-
-已解决:
-1. Navigation (actionbar 显示 indacator)
-2. listview
-3. 开机启动
-4. 数据库增加字段 finished
-5. 修正 listview item position 错误
-*/
 
 public class MainActivity extends BaseActivity {
 
@@ -60,18 +37,14 @@ public class MainActivity extends BaseActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-    private MemoListFragment memoListFragment;
+    public MemoListFragment memoListFragment;
 
     String[] mDrawerListTitles = new String[]{NEW_MEMO, SETTING_EMAIL, CLEAR_ALL_FINISHED};
 
-    private static final String NEW_MEMO = "新建";
+    private static final String NEW_MEMO = "高级创建";
     private static final String SYNC_MEMO = "同步";
     private static final String SETTING_EMAIL = "设置邮箱";
     private static final String CLEAR_ALL_FINISHED = "清除已完成";
-
-    private static final int NAVIGATION_SHOW_ALL = 0;
-    private static final int NAVIGATION_SHOW_UNFINISHED = 1;
-    private static final int NAVIGATION_SHOW_FINISHED = 2;
 
     private int idShowMethod;// 决定如何显示，全部，未完成，已完成
 
@@ -103,7 +76,6 @@ public class MainActivity extends BaseActivity {
             }
         }
 
-//        initService();
         PendingAlarmManager.freshAllAlarm(this);
     }
 
@@ -184,12 +156,13 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 String title = mDrawerListTitles[position];
-                if (title.equals(NEW_MEMO)) {// 新建
+                if (title.equals(NEW_MEMO)) {// 快速新建
                     actionAddMemo();
                 } else if (title.equals(SETTING_EMAIL)) {// 设置通知邮箱
-
+                    Toast.makeText(MainActivity.this, "该功能马上到来!!!", Toast.LENGTH_SHORT).show();
                 } else if (title.equals(CLEAR_ALL_FINISHED)) {
-                    memoListFragment.clearFinishedMemo();
+                    MemoManager.clearAllFinished(MainActivity.this);
+                    BroadCastService.sendBroadCastUpdate(MainActivity.this);
                 }
 
                 mDrawerLayout.closeDrawer(mDrawerList);
@@ -219,7 +192,10 @@ public class MainActivity extends BaseActivity {
 
         switch (item.getItemId()) {
             case R.id.action_add_memo:
-                actionAddMemo();
+                //actionAddMemo();
+                AlertDialog dialog = AddMemoDialog.getNewMemoDialog(MainActivity.this);
+                dialog.show();
+
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -253,18 +229,6 @@ public class MainActivity extends BaseActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //提示如果是服务里调用，必须加入new task标
         intent.addCategory(Intent.CATEGORY_HOME);
         startActivity(intent);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-     //   MNotification.shwoNotification(this, "该起床喽");
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-   //     MNotification.clearNotification();
     }
 }
 

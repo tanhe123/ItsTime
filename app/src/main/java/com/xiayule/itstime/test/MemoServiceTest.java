@@ -73,4 +73,9 @@ public class MemoServiceTest extends AndroidTestCase {
     public void testFind() throws Exception {
 
     }
+
+    public void testClearFinishedMemos() {
+        MemoService memoService = new MemoService(getContext());
+        memoService.clearFinished();
+    }
 }

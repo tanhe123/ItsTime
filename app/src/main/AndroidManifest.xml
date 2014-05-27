@@ -2,12 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xiayule.itstime">
 
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="17"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:uiOptions="splitActionBarWhenNarrow">
+        android:uiOptions="splitActionBarWhenNarrow"
+        android:name="com.xiayule.itstime.application.MyApplication"
+        >
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name" >
@@ -19,7 +25,7 @@
         </activity>
         <activity
             android:name=".ui.AddMemoActivity"
-            android:label="@string/title_activity_add_memo" >
+            android:label="@string/title_add_memo" >
         </activity>
 
         <!-- 开机启动 -->

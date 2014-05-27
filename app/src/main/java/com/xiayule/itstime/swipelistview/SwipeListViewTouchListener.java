@@ -26,6 +26,7 @@ import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 import android.view.*;
+import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
@@ -408,7 +409,15 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
      */
     protected void reloadSwipeStateInView(View frontView) {
     	 if(this.swipeClosesAllItemsWhenListMoves){
-    		 frontView.setTranslationX(0f);
+    		 //frontView.setTranslationX(0f);
+             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                 frontView.setTranslationX(0f);
+             } else {
+                 TranslateAnimation anim = new TranslateAnimation(0, 0, 0, 0);
+                 anim.setFillAfter(true);
+                 anim.setDuration(0);
+                 frontView.startAnimation(anim);
+             }
          }
     }
 
@@ -1045,7 +1054,5 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
         }
 
         resetPendingDismisses();
-
     }
-
 }

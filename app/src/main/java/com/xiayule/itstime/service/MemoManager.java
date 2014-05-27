@@ -41,9 +41,20 @@ public class MemoManager {
         return service.getUnfinishedMemos();
     }
 
+    //TODO: 获取当天未完成的任务
+  //  public static List<Memo> getAllUnfinishedMemosBefore(Context context, String date) {
+    //
+    //}
+
     public static void deleteMemo(Context context, int id) {
         MemoService service = new MemoService(context);
         service.delete(id);
+    }
+
+    public static void addMemo(Context context, String date, String content) {
+        MemoService service = new MemoService(context);
+        Memo memo = new Memo(date, content);
+        service.save(memo);
     }
 
     public static void updateMemo(Context context, Memo memo) {

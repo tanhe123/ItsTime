@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.xiayule.itstime.R;
 import com.xiayule.itstime.domain.Memo;
+import com.xiayule.itstime.service.BroadCastService;
 import com.xiayule.itstime.swipelistview.SwipeListView;
 import com.xiayule.itstime.service.MemoManager;
 
@@ -63,7 +64,7 @@ public class MemoAdapter extends BaseAdapter {
         final Memo item = getItem(position);
         ViewHolder holder;
 
-        if (view == null) {
+     //   if (view == null) {
             view = inflater.inflate(R.layout.memo_list_item, viewGroup, false);
             holder = new ViewHolder();
             holder.memo_date = (TextView) view.findViewById(R.id.memo_date);
@@ -78,8 +79,10 @@ public class MemoAdapter extends BaseAdapter {
                     // 切换任务状态
                     item.setFinished(!item.isFinished());
                     MemoManager.updateMemo(context, item);
-                    Log.d(TAG, "position: " + position + " content: " + item.getContent());
+                    Log.i(TAG, "position: " + position + " content: " + item.getContent());
                     refresh(idShowMethod);
+
+                    BroadCastService.sendBroadCastUpdate(context);
                 }
             });
 
@@ -92,11 +95,11 @@ public class MemoAdapter extends BaseAdapter {
             });
 
             view.setTag(holder);
-        } else {
-            holder = (ViewHolder) view.getTag();
-        }
+//        } else {
+  //          holder = (ViewHolder) view.getTag();
+    //    }
 
-        ((SwipeListView)viewGroup).recycle(view, position);
+      //  ((SwipeListView)viewGroup).recycle(view, position);
 
         holder.memo_date.setText(item.getDate());
         holder.memo_content.setText(item.getContent());
