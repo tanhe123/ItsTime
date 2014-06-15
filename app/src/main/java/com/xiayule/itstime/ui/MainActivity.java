@@ -27,6 +27,7 @@ import com.xiayule.itstime.service.LocalService;
 import com.xiayule.itstime.service.MemoManager;
 import com.xiayule.itstime.service.MemoService;
 import com.xiayule.itstime.service.PreferenceService;
+
 import com.xiayule.itstime.utils.PendingAlarmManager;
 
 public class MainActivity extends BaseActivity {
@@ -36,7 +37,6 @@ public class MainActivity extends BaseActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-
     public MemoListFragment memoListFragment;
 
     String[] mDrawerListTitles = new String[]{NEW_MEMO, SETTING_EMAIL, CLEAR_ALL_FINISHED};
@@ -76,7 +76,6 @@ public class MainActivity extends BaseActivity {
             }
         }
 
-        //initService();
         PendingAlarmManager.freshAllAlarm(this);
     }
 

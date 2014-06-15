@@ -46,7 +46,6 @@ public class MemoListFragment extends ListFragment {
         BroadCastService.registerBroadCastUpdate(getActivity(), br);
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
