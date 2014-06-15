@@ -409,15 +409,15 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
      */
     protected void reloadSwipeStateInView(View frontView) {
     	 if(this.swipeClosesAllItemsWhenListMoves){
-    		 //frontView.setTranslationX(0f);
-             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+    		 frontView.setTranslationX(0f);
+             /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                  frontView.setTranslationX(0f);
              } else {
                  TranslateAnimation anim = new TranslateAnimation(0, 0, 0, 0);
                  anim.setFillAfter(true);
                  anim.setDuration(0);
                  frontView.startAnimation(anim);
-             }
+             }*/
          }
     }
 

@@ -27,13 +27,13 @@ public class LocalService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        PendingAlarmManager.freshAllAlarm(this);
         Log.d(TAG, "local service has create");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        PendingAlarmManager.freshAllAlarm(this);
+
         Log.d(TAG, "开启 start");
 
         return START_STICKY;

@@ -3,7 +3,7 @@
     package="com.xiayule.itstime">
 
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="11"
         android:targetSdkVersion="17"/>
 
     <application
