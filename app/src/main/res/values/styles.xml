@@ -10,4 +10,17 @@
         <item name="android:textSize">@dimen/label_text_size</item>
         <item name="android:textColor">@color/title_gray</item>
     </style>
+
+    <style name="ListFrontContent">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">@dimen/height_list</item>
+        <item name="android:background">@color/background_list_front</item>
+    </style>
+
+    <style name="ListBackContent">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">@dimen/height_list</item>
+        <item name="android:background">@drawable/background_item</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

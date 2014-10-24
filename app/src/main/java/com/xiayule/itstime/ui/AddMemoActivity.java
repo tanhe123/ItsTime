@@ -2,9 +2,12 @@ package com.xiayule.itstime.ui;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -13,6 +16,7 @@ import android.widget.Toast;
 
 import com.xiayule.itstime.R;
 import com.xiayule.itstime.domain.Memo;
+import com.xiayule.itstime.service.BroadCastService;
 import com.xiayule.itstime.service.MemoService;
 import com.xiayule.itstime.utils.Time;
 
@@ -74,7 +78,6 @@ public class AddMemoActivity extends BaseActivity {
                         new DatePickerDialog.OnDateSetListener(){
                             @Override
                             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-
                                 String date = year + "-" +
                                         (month < 10 ? "0"+month : month) + "-" +
                                         (dayOfMonth < 10 ? "0"+dayOfMonth : dayOfMonth);
@@ -90,7 +93,7 @@ public class AddMemoActivity extends BaseActivity {
     }
 
     public void initComp() {
-        txtDate = (TextView) findViewById(R.id.date);
+        txtDate = (TextView) findViewById(R.id.memo_date);
         editMemo = (EditText) findViewById(R.id.et_memo);
         rl_date = (RelativeLayout) findViewById(R.id.rl_date);
 
@@ -120,6 +123,14 @@ public class AddMemoActivity extends BaseActivity {
                 String date = txtDate.getText().toString();
                 String content = editMemo.getText().toString();
 
+                if (content.isEmpty()) {
+                    //设置弹跳动画
+                    Animation shakeAnimation = AnimationUtils.loadAnimation(AddMemoActivity.this, R.anim.shake);
+                    editMemo.startAnimation(shakeAnimation);
+                    Log.d(TAG, "不能为空");
+                    return true;
+                }
+
                 MemoService service = new MemoService(this);
 
                 if (paramNewMemo) {// 如果是新建的 memo
@@ -132,6 +143,7 @@ public class AddMemoActivity extends BaseActivity {
 
                 Toast.makeText(this, "成功", Toast.LENGTH_SHORT).show();
 
+                BroadCastService.sendBroadCastUpdate(this);
                 backHome();
 
                 break;

@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE memos" +
                 "(_id integer primary key autoincrement, " +
-                "content varchar(300), date varchar(15))");
+                "content varchar(300) not null, date varchar(15), finished integer not null)");
     }
 
     @Override

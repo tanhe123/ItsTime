@@ -1,19 +1,13 @@
 package com.xiayule.itstime.ui;
 
 import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,47 +19,34 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.xiayule.itstime.R;
-import com.xiayule.itstime.comp.MNotification;
+import com.xiayule.itstime.comp.AddMemoDialog;
 import com.xiayule.itstime.fragment.BlankFragment;
 import com.xiayule.itstime.fragment.MemoListFragment;
-import com.xiayule.itstime.receiver.AlarmReceiver;
+import com.xiayule.itstime.service.BroadCastService;
+import com.xiayule.itstime.service.LocalService;
+import com.xiayule.itstime.service.MemoManager;
 import com.xiayule.itstime.service.MemoService;
-import com.xiayule.itstime.utils.AlarmTask;
+import com.xiayule.itstime.service.PreferenceService;
 
-import java.util.Calendar;
-import java.util.Date;
+import com.xiayule.itstime.utils.PendingAlarmManager;
 
-
-/*
-TODO:
-1. 动态修改 actionbar， 如长按 list item， 然后可以删除，可以标记为已完成
-3. 待办提醒
-4. 邮件通知
-
-5. Notification notification 显示 现在去做（稍后会继续提醒）， 已完成 两个选项， 如果第二次显示则显示 正在做和已完成
-* 如果有多条要合并，并显示条数（或者合并，单击 展开)
-6. 完成积分 排行
-
-已解决:
-1. Navigation (actionbar 显示 indacator)
-2. listview
-3. 开机启动
-*/
-
-public class MainActivity extends BaseActivity
-        implements MemoListFragment.OnFragmentInteractionListener {
+public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
 
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
+    public MemoListFragment memoListFragment;
 
-    String[] mDrawerListTitles = new String[]{NEW_MEMO, SETTING_EMAIL};
+    String[] mDrawerListTitles = new String[]{NEW_MEMO, SETTING_EMAIL, CLEAR_ALL_FINISHED};
 
-    private static final String NEW_MEMO = "新建";
+    private static final String NEW_MEMO = "高级创建";
     private static final String SYNC_MEMO = "同步";
     private static final String SETTING_EMAIL = "设置邮箱";
+    private static final String CLEAR_ALL_FINISHED = "清除已完成";
+
+    private int idShowMethod;// 决定如何显示，全部，未完成，已完成
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,30 +56,65 @@ public class MainActivity extends BaseActivity
         initComp();
         initDrawerLayout();
 
+        initActionNavigation();
+        setListener();
+
+        idShowMethod = PreferenceService.getShowMethod(this);
+
         if (savedInstanceState == null) {
 
             int count = getMemoCount();
+
+            actionBar.setSelectedNavigationItem(idShowMethod);
 
             if (count == 0) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, new BlankFragment())
                         .commit();
             } else {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, MemoListFragment.newInstance())
-                        .commit();
+                refreshMemoListFragment();
             }
-
-//            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         }
-        setListener();
 
-    //    newTaskTest();
+        PendingAlarmManager.freshAllAlarm(this);
     }
 
-    private void newTaskTest() {
-        Calendar c =  Calendar.getInstance();
-        AlarmTask.newTask(this, c.getTimeInMillis()+5000);
+    private void initService() {
+        Intent intent = new Intent(this, LocalService.class);
+        startService(intent);
+        Log.d(TAG, "准备启动 service");
+    }
+
+    private void refreshMemoListFragment() {
+        memoListFragment = new MemoListFragment();
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, memoListFragment)
+                .commit();
+    }
+
+    private void initActionNavigation() {
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+
+        ArrayAdapter dropDownAdapter =
+                ArrayAdapter.createFromResource(this,
+                        R.array.navigation_mode_list_array,
+                        android.R.layout.simple_list_item_1);
+        actionBar.setListNavigationCallbacks(dropDownAdapter, new ActionBar.OnNavigationListener() {
+            @Override
+            public boolean onNavigationItemSelected(int position, long id) {
+                // TODO: 导航栏　可以选择默认显示全部0，未完成1，已完成2
+
+                // 用 position 来表示选择
+                PreferenceService.saveShowMethod(MainActivity.this, position);
+
+                Log.d(TAG, "selected " + position);
+
+                refreshMemoListFragment();
+
+                return true;
+            }
+        });
     }
 
     private void initComp() {
@@ -110,7 +126,6 @@ public class MainActivity extends BaseActivity
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
                 R.layout.drawer_list_item,
                 R.id.item, mDrawerListTitles));
-
     }
 
     private void setListener() {
@@ -141,10 +156,13 @@ public class MainActivity extends BaseActivity
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 String title = mDrawerListTitles[position];
-                if (title.equals(NEW_MEMO)) {// 新建
+                if (title.equals(NEW_MEMO)) {// 快速新建
                     actionAddMemo();
                 } else if (title.equals(SETTING_EMAIL)) {// 设置通知邮箱
-
+                    Toast.makeText(MainActivity.this, "该功能马上到来!!!", Toast.LENGTH_SHORT).show();
+                } else if (title.equals(CLEAR_ALL_FINISHED)) {
+                    MemoManager.clearAllFinished(MainActivity.this);
+                    BroadCastService.sendBroadCastUpdate(MainActivity.this);
                 }
 
                 mDrawerLayout.closeDrawer(mDrawerList);
@@ -152,26 +170,10 @@ public class MainActivity extends BaseActivity
         });
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        //TODO: 动态修改 actionbar
-        MenuInflater inflater = getMenuInflater();
-        //       menu.clear();;
-        //     inflater.inflate(R.menu.memu_add_memo, menu);
-
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
     public int getMemoCount() {
         MemoService service = new MemoService(this);
         int count = service.getCount();
         return count;
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 
     @Override
@@ -190,7 +192,10 @@ public class MainActivity extends BaseActivity
 
         switch (item.getItemId()) {
             case R.id.action_add_memo:
-                actionAddMemo();
+                //actionAddMemo();
+                AlertDialog dialog = AddMemoDialog.getNewMemoDialog(MainActivity.this);
+                dialog.show();
+
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -217,9 +222,6 @@ public class MainActivity extends BaseActivity
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-
-
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -228,6 +230,7 @@ public class MainActivity extends BaseActivity
         intent.addCategory(Intent.CATEGORY_HOME);
         startActivity(intent);
     }
+<<<<<<< HEAD
 
 
 
@@ -242,6 +245,8 @@ public class MainActivity extends BaseActivity
         super.onStart();
    //     MNotification.clearNotification();
     }
+=======
+>>>>>>> a647f5fae1731276320e1e5ec89d0a4a5e2fa08b
 }
 
 

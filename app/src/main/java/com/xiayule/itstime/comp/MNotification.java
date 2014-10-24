@@ -20,7 +20,12 @@ public class MNotification {
     // mId allows you to update the notification later on.
     public static final int notifyId = 1;
 
-    public static void shwoNotification(Context context, String contentText) {
+    public static void shwoNotification(Context context, String contentText, int number) {
+        if (number == 0) {// 如果没有要做的事，就取消掉通知
+            clearNotification();
+            return ;
+        }
+
         mContext = context;
 
         NotificationCompat.Builder mBuilder =
@@ -29,7 +34,8 @@ public class MNotification {
                         .setContentTitle("Its time")
                         .setContentText(contentText)
                         .setTicker("有新的任务要去完成喽")
-                        //.setContentInfo("10") 2.x 好像不支持
+                        //.setContentInfo(number) //2.x 好像不支持
+                        .setNumber(number)
                         .setAutoCancel(false);
 
         // Creates an explicit intent for an Activity in your app
@@ -50,12 +56,14 @@ public class MNotification {
                         PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(resultPendingIntent);
 
-   //     mBuilder.setNumber(++number);
-
         NotificationManager mNotificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        mNotificationManager.notify(notifyId, mBuilder.build());
+        // 确保 notification 不能被清除
+        Notification notification = mBuilder.build();
+        notification.flags |= Notification.FLAG_NO_CLEAR;
+
+        mNotificationManager.notify(notifyId, notification);
     }
 
     public static void clearNotification() {

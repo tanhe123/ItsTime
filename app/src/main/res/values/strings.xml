@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="title_activity_add_memo">新建备忘</string>
+    <string name="broadcast_update_action">com.xiayule.action.update</string>
+
+    <string name="title_add_memo">新建备忘</string>
+    <string name="title_add_memo_quick">快速创建</string>
+
     <string name="title_date">日期</string>
     <string name="title_memo">备忘</string>
     <string name="action_delete">Delete</string>
@@ -8,10 +12,14 @@
     <string name="action_add_memo">Add</string>
     <string name="drawer_open">打开侧边栏</string>
     <string name="drawer_close">关闭侧边栏</string>
+    
 
+
+    <string name="mark_finished">标记完成</string>
+    <string name="mark_unfinished">取消标记</string>
 
     <string name="ga_trackingId">UA-545027-8</string>
-    <string name="app_name">365 Days</string>
+    <string name="app_name">ItsTime</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_main">365 Days</string>
     <string name="title_activity_day_form">New Day</string>
