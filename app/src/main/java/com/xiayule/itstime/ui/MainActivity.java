@@ -230,6 +230,23 @@ public class MainActivity extends BaseActivity {
         intent.addCategory(Intent.CATEGORY_HOME);
         startActivity(intent);
     }
+<<<<<<< HEAD
+
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        MNotification.shwoNotification(this, "该起床喽");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+   //     MNotification.clearNotification();
+    }
+=======
+>>>>>>> a647f5fae1731276320e1e5ec89d0a4a5e2fa08b
 }
 
 
